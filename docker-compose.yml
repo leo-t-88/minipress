@@ -1,0 +1,41 @@
+networks:
+  minipress.net:
+    driver: bridge
+
+services:
+  app:
+    image: leot88/php:8.5.6
+    ports:
+      - "80:80"
+    volumes :
+      - ./minipress.web/:/var/php/public/
+      - ./minipress.core/:/var/php/
+      - ./minipress.core/public/mp-admin/:/var/php/public/mp-admin/
+    working_dir: /var/php/src
+    networks:
+      - minipress.net
+    depends_on:
+      - sql
+    command: sh -c "composer install && php -S 0.0.0.0:80 -t /var/php/public"
+
+
+  sql:
+    image: mariadb:10.6.25
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      minipress.net:
+        aliases:
+          - sql.db
+
+  adminer:
+    image: adminer:5.4.2
+    ports:
+      - "8080:8080"
+    command: ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
+    networks:
+      - minipress.net
