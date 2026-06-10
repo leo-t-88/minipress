@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 session_start();
 
-use \gift\infra\Eloquent;
+use mp\infra\Eloquent;
 use \Slim\Views\Twig;
 use \Slim\Views\TwigMiddleware;
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
-use gift\core\domain\entities\User;
+use mp\core\domain\entities\User;
 
 Eloquent::init(__DIR__ . '/minipress.db.conf.ini');
 
