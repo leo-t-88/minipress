@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace minipress\core\domain\entities;
+namespace mp\core\domain\entities;
 use \Illuminate\Database\Eloquent as Eloq;
 
 class Article extends Eloq\Model {

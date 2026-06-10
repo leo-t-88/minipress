@@ -1,0 +1,14 @@
+<h1>MiniPress</h1>
+
+{% if user %}
+    <p>Bonjour {{ user }}</p>
+    <a href="/logout">Déconnexion</a>
+{% else %}
+    <a href="/signin">Se connecter</a>
+{% endif %}
+
+<ul>
+    {% for item in menu %}
+    <li><a href="{{ url_for(item.route) }}">{{ item.label }}</a></li>
+    {% endfor %}
+</ul>

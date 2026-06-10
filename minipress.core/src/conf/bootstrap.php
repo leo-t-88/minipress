@@ -11,7 +11,7 @@ use mp\core\domain\entities\User;
 
 Eloquent::init(__DIR__ . '/minipress.db.conf.ini');
 
-$app = AppFactory::create();
+$app = \Slim\Factory\AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
 $app->setBasePath('/mp-admin');
