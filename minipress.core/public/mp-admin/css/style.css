@@ -1,3 +1,7 @@
+:root{
+    --txt-color: #fefefe;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -14,7 +18,7 @@ body {
 header, footer {
     background-color: #262b46;
     text-align: center;
-    color: #fefefe;
+    color: var(--txt-color);
 }
 
 nav ul {
@@ -29,17 +33,18 @@ nav li {
 
 nav a {
     display: block;
-    padding: 10px;
+    padding: 7px;
     text-decoration: none;
-    color: #fefefe;
+    color: var(--txt-color);
 }
 
 nav a:hover {
+    border-left: 3px solid var(--txt-color);
     background: #2d6cdf;
 }
 
 main {
-    padding: 5px;
+    padding: 0 10px;
 }
 
 input, textarea,select {
@@ -75,7 +80,7 @@ button:hover, input[type="submit"]:hover, .menu-buttons a:hover {
     background-color: #6988ed;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 900px) {
     body {
         grid-template-columns: 13vw 1fr;
         grid-template-rows: 1fr auto; 
@@ -88,7 +93,6 @@ button:hover, input[type="submit"]:hover, .menu-buttons a:hover {
     }
 
     main {
-        padding: 5px;
         grid-column: 2;
         grid-row: 1;
     }

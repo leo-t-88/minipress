@@ -3,21 +3,21 @@ declare(strict_types=1);
 
 namespace mp\webui\actions;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
+use Slim\Routing\RouteContext;
 
 use mp\webui\providers\AuthnProvider;
 use mp\webui\providers\CsrfTokenProvider;
 
 use mp\core\application\exceptions\CsrfException;
-use mp\core\application\exceptions\DataErrorException;
-use mp\core\application\exceptions\NotFoundException;
+use mp\core\application\exceptions\AuthnException;
 use Slim\Exception\HttpBadRequestException;
 
 class PostSigninAction
 {
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
 
@@ -33,11 +33,9 @@ class PostSigninAction
             CsrfTokenProvider::check($csrf);
             AuthnProvider::signin($email, $password);
 
-            return $response
-                ->withHeader('Location', '/mp-admin/')
-                ->withStatus(302);
+            return $response->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor('home'))->withStatus(302);
 
-        } catch (CsrfException | NotFoundException | DataErrorException $e) {
+        } catch (CsrfException | AuthnException | HttpBadRequestException $e) {
             return Twig::fromRequest($request)->render($response, 'signin.twig', [
                 'error' => $e->getMessage(),
                 'csrf' => CsrfTokenProvider::generate()
