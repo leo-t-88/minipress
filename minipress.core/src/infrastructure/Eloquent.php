@@ -7,7 +7,7 @@
  * @author: canals
  */
 
-namespace gift\infra;
+namespace minipress\infra;
 
 use Illuminate\Database\Capsule\Manager as DB ;
 
