@@ -1,0 +1,44 @@
+<?php
+declare(strict_types=1);
+
+namespace mp\webui\actions;
+
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Routing\RouteContext;
+use mp\core\domain\entities\Article;
+
+class PostArticleAction extends AbstractAction
+{
+    public function __invoke(Request $request, Response $response, array $args): Response
+    {
+        $data = $request->getParsedBody();
+
+        $titre = filter_var($data['titre'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
+        $resume = filter_var($data['resume'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
+        $contenu = filter_var($data['contenu'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if (empty($titre) || empty($contenu)) {
+            throw new \InvalidArgumentException("Le titre et le contenu sont obligatoires.");
+        }
+
+        try {
+            $article = new Article();
+            $article->titre = $titre;
+            $article->resume = $resume;
+            $article->contenu = $contenu;
+            
+            $article->save();
+            
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Erreur lors de la sauvegarde de l'article : " . $e->getMessage());
+        }
+
+        $routeContext = RouteContext::fromRequest($request);
+        $routeParser = $routeContext->getRouteParser();
+        
+        $url = $routeParser->urlFor('liste_articles'); 
+
+        return $response->withHeader('Location', $url)->withStatus(302);
+    }
+}
