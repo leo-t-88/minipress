@@ -3,14 +3,11 @@ declare(strict_types=1);
 
 session_start();
 
-use minipress\infra\Eloquent;
-use minipress\core\domain\entities\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Slim\Factory\AppFactory;
-use Slim\Views\Twig;
-use Slim\Views\TwigMiddleware;
-
-require_once __DIR__ . '/../../vendor/autoload.php';
+use mp\infra\Eloquent;
+use \Slim\Views\Twig;
+use \Slim\Views\TwigMiddleware;
+use \Illuminate\Database\Eloquent\ModelNotFoundException;
+use mp\core\domain\entities\User;
 
 Eloquent::init(__DIR__ . '/minipress.db.conf.ini');
 

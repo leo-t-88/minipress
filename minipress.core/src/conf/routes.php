@@ -1,8 +1,13 @@
 <?php
 declare(strict_types=1);
 
-use Slim\App;
-use minipress\webui\actions\GetHomeAction;
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Connexion BD
+use mp\infra\Eloquent;
+Eloquent::init(__DIR__ . '/minipress.db.conf.ini');
+
+use \Slim\App;
 
 return function (App $app): App {
     $app->get('/', GetHomeAction::class)->setName('home');
