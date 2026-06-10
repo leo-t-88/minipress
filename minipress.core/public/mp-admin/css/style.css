@@ -75,9 +75,9 @@ button:hover, input[type="submit"]:hover, .menu-buttons a:hover {
     background-color: #6988ed;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1200px) {
     body {
-        grid-template-columns: 11vw 1fr;
+        grid-template-columns: 13vw 1fr;
         grid-template-rows: 1fr auto; 
     }
 
