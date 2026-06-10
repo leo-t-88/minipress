@@ -1,0 +1,41 @@
+{% extends 'layout.twig' %}
+{% block title %} Créer un article {% endblock %}
+
+{% block content %}
+<h1>Créer un article</h1>
+
+<form action="{{ url_for('form_article') }}" method="post">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+    <input type="text" id="titre" name="titre" value="{{ old.titre ?? '' }}" placeholder="Titre" required>
+    </br>
+    <textarea id="resume" name="resume" placeholder="Resumé">{{ old.resume ?? '' }}</textarea>
+    </br>
+    <input type="contenu" id="contenu" name="contenu" value="{{ old.contenu ?? '' }}" placeholder="Contenu" required>
+    </br>
+    <button type="submit">Créer la box</button>
+    </br>
+    <a href="{{ url_for('form_article') }}">Annuler</a>
+</form>
+
+<script>
+    const checkbox = document.getElementById('kdo');
+    const wrapper = document.getElementById('message_kdo_wrapper');
+    const textarea = document.getElementById('message_kdo');
+
+    function toggleMessage() {
+        if (checkbox.checked) {
+            wrapper.style.display = 'block';
+            textarea.setAttribute('required', 'required');
+        } else {
+            wrapper.style.display = 'none';
+            textarea.removeAttribute('required');
+        }
+    }
+
+    toggleMessage();
+    checkbox.addEventListener('change', toggleMessage);
+</script>
+
+{% endblock %}

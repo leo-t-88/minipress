@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Views\Twig;
 use mp\webui\providers\CsrfTokenProvider;
 
-class GetSigninAction
+class GetSigninAction extends AbstractAction
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {

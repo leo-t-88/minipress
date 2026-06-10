@@ -15,7 +15,7 @@ use mp\core\application\exceptions\DataErrorException;
 use mp\core\application\exceptions\NotFoundException;
 use Slim\Exception\HttpBadRequestException;
 
-class PostSigninAction
+class PostSigninAction extends AbstractAction
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
