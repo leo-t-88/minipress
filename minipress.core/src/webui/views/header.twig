@@ -9,7 +9,7 @@
         {% if user %}
         {# <a href="{{ url_for('logout') }}">Déconnexion</a> #}
         {% else %}
-        <li><a href="{{ url_for(signin) }}">Se connecter</a></li>
+        <li><a href="{{ url_for('signin') }}">Se connecter</a></li>
         {% endif %}
         {% for item in menu %}
         <li><a href="{{ url_for(item.route) }}">{{ item.label }}</a></li>
