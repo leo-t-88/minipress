@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use mp\api\ApiArticles;
 use Slim\App;
 use mp\webui\actions\GetHomeAction;
 use mp\webui\actions\GetSigninAction;
@@ -22,6 +23,8 @@ return function (App $app): App {
     $app->get('/logout', LogoutAction::class)->setName('logout');
     $app->get('/categories/create', GetCreateCategorieAction::class)->setName('categorie_create');
     $app->post('/categories/create', PostCreateCategorieAction::class)->setName('categorie_store');
+    
+    $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
 
     return $app;
 };
