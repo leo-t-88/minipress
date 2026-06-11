@@ -36,7 +36,7 @@ class PostArticleAction extends AbstractAction
         $routeContext = RouteContext::fromRequest($request);
 
         $routeParser = $routeContext->getRouteParser(); 
-        $url = $routeParser->urlFor('form_article');
+        $url = $routeParser->urlFor('liste_articles');
 
         return $response->withHeader('Location', $url)->withStatus(302);    
     }
