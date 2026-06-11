@@ -8,6 +8,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use mp\core\domain\entities\Categorie;
 
+use mp\webui\providers\CsrfTokenProvider;
+
 class GetArticleFormAction extends AbstractAction
 {
     public function __invoke(Request $request, Response $response, array $args): Response
@@ -15,9 +17,10 @@ class GetArticleFormAction extends AbstractAction
         $categories = Categorie::all();
 
         $view = Twig::fromRequest($request);
-        
-        return $view->render(
-            $response, 'create_article_form.twig', ['categories' => $categories]
-        );
+
+        return $view->render($response, 'create_article_form.twig', [
+            'categories' => $categories,
+            'csrf_token' => CsrfTokenProvider::generate()
+        ]);
     }
 }

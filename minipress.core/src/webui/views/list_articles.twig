@@ -5,8 +5,6 @@
 {% block content %}
     <h2>Tous les articles</h2>
 
-    <p><a href="{{ url_for('form_article') }}" class="btn-add"> Créer un nouvel article</a></p>
-
     {% if articles is empty %}
         <p>Aucun article n'a été publié pour le moment.</p>
     {% else %}
@@ -20,5 +18,5 @@
         </ul>
     {% endif %}
 
-    <p><a href="{{ url_for('home') }}">Retour à l'accueil</a></p>
+    <a href="{{ url_for('form_article') }}"><button>Créer un nouvel article</button></a>
 {% endblock %}

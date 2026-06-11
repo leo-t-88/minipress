@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace gift\core\application\usecases;
+namespace mp\core\application\usecases;
 
 use Illuminate\Database\QueryException;
 use gift\core\application\exceptions\DataErrorException;
@@ -9,7 +9,7 @@ use mp\core\domain\entities\Article;
 
 class AuthzService implements AuthzInterface
 {
-    public function isGranted(string $user_id, string $operation, string $article_id): bool
+    public function isGranted(int $user_id, string $operation, ?string $article_id = null): bool
     {
         try {
             $user = User::where('id', $user_id)->first();
