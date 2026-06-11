@@ -10,14 +10,14 @@ use mp\core\domain\entities\Categorie;
 
 use mp\webui\providers\CsrfTokenProvider;
 
-class GetArticleFormAction extends AbstractAction
+class GetCreateArticleAction extends AbstractAction
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $categories = Categorie::all();
 
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'create_article_form.twig', [
+        return $view->render($response, 'create_article.twig', [
             'categories' => $categories,
             'csrf_token' => CsrfTokenProvider::generate()
         ]);

@@ -16,7 +16,7 @@ use mp\core\application\usecases\ArticleManaService;
 use mp\core\application\exceptions\DataErrorException;
 use mp\core\application\exceptions\NotFoundException;
 
-class PostArticleAction extends AbstractAction
+class PostCreateArticleAction extends AbstractAction
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {

@@ -24,7 +24,7 @@ header, footer {
 
 
 input, textarea, select {
-    width: 90%;
+    width: stretch;
     padding: 9px;
     margin: 5px 0;
     border-radius: 12px;
@@ -43,8 +43,12 @@ textarea{
     resize: none;
 }
 
+p {
+    margin: 5px;
+}
+
 #contenu{
-    min-height: 450px;
+    min-height: 300px;
 }
 
 button, input[type="submit"] {
@@ -70,7 +74,7 @@ header h2 {
     margin: 7px;
 }
 header h4{
-    margin: 10px 0 20px;
+    margin: 10px 0 15px;
 }
 
 #header-title label {
