@@ -14,6 +14,7 @@ use mp\webui\actions\PostCreateCategorieAction;
 
 // Use Api
 use mp\api\ApiCategories;
+use mp\api\ApiArticleId;
 
 return function (App $app): App {
     $app->get('/', GetHomeAction::class)->setName('home');
@@ -29,6 +30,6 @@ return function (App $app): App {
 
     // Api
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
-
+    $app->get('/api/articles/{id_a}', ApiArticleId::class )->setName('api_article_id');
     return $app;
 };
