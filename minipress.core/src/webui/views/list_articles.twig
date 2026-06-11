@@ -5,10 +5,19 @@
 {% block content %}
     <h2>Tous les articles</h2>
 
-    <p><a href="{{ url_for('form_article') }}" class="btn-add"> Créer un nouvel article</a></p>
-
+    <form action="{{ url_for('liste_articles') }}" method="get" class="filter-form">
+        <label for="filter_categorie">Filtrer par catégorie :</label>
+        <select id="filter_categorie" name="categorie_id" onchange="this.form.submit()">
+            <option value="">Toutes les catégories</option>
+            {% for cat in categories %}
+            <option value="{{ cat.id }}" {% if current_categorie_id == cat.id %}selected{% endif %}>
+                {{ cat.nom }}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
     {% if articles is empty %}
-        <p>Aucun article n'a été publié pour le moment.</p>
+        <p>Aucun article ne correspond à cette catégorie ou aucun article n'a été publié.</p>
     {% else %}
         <ul class="articles-list">
             {% for article in articles %}
@@ -20,5 +29,5 @@
         </ul>
     {% endif %}
 
-    <p><a href="{{ url_for('home') }}">Retour à l'accueil</a></p>
+    <a href="{{ url_for('form_article') }}"><button>Créer un nouvel article</button></a>
 {% endblock %}

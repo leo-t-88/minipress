@@ -23,8 +23,8 @@ header, footer {
 }
 
 
-input, textarea,select {
-    width: 300px;
+input, textarea, select {
+    width: stretch;
     padding: 9px;
     margin: 5px 0;
     border-radius: 12px;
@@ -41,6 +41,14 @@ input:focus, textarea:focus, select:focus {
 
 textarea{
     resize: none;
+}
+
+p {
+    margin: 5px;
+}
+
+#contenu{
+    min-height: 300px;
 }
 
 button, input[type="submit"] {
@@ -62,12 +70,11 @@ button:hover, input[type="submit"]:hover {
     align-items: center;
 }
 
-header h2, header h4{
+header h2 {
     margin: 7px;
 }
-
 header h4{
-    margin-bottom: 30px;
+    margin: 10px 0 15px;
 }
 
 #header-title label {
@@ -102,13 +109,13 @@ header h4{
 #menu-toggle:checked + #header-title label > svg .line2 {--offset: -50;}
 
 nav {
-    height: 0px;
+    display: none;
     transform: translateY(-10px);
     transition: .25s ease;
 }
 
 #menu-toggle:checked ~ nav {
-    height: auto;
+    display: block;
     transform: translateY(0);
 }
 
@@ -130,7 +137,7 @@ nav a {
 }
 
 nav a:hover {
-    border-left: 3px solid var(--txt-color-dark);
+    border-left: 4px solid var(--txt-color-dark);
     background: #2d6cdf;
 }
 
@@ -161,7 +168,7 @@ main {
     }
 
     nav {
-        height: auto;
+        display: block;
     }
 
     main {

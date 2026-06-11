@@ -26,9 +26,8 @@ CREATE TABLE Article (
     contenu TEXT NOT NULL,
     date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
     date_publication DATETIME NULL,
-
     auteur_id INT NOT NULL,
-    categorie_id INT NOT NULL,
+    categorie_id INT NULL,
 
     CONSTRAINT fk_article_auteur
         FOREIGN KEY (auteur_id)

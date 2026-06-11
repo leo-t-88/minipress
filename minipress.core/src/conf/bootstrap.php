@@ -37,7 +37,8 @@ $twig->getEnvironment()->addGlobal('version', ['mp' => '0.0.1', 'php' => PHP_VER
 $twig->getEnvironment()->addGlobal('user', $user);
 $twig->getEnvironment()->addGlobal('menu', [
     ['label' => 'Accueil', 'route' => 'home'],
-    ['label' => 'Créer une Catégorie', 'route' => 'categorie_create'],
+    ['label' => 'Articles', 'route' => 'liste_articles'],
+    ['label' => 'Créer une Catégorie', 'route' => 'categorie_create']
 ]);
 
 $app->add(TwigMiddleware::create($app, $twig));
