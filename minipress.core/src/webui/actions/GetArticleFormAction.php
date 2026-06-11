@@ -6,13 +6,18 @@ namespace mp\webui\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
+use mp\core\domain\entities\Categorie;
 
 class GetArticleFormAction extends AbstractAction
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
+        $categories = Categorie::all();
+
         $view = Twig::fromRequest($request);
         
-        return $view->render($response, 'create_article_form.twig');
+        return $view->render(
+            $response, 'create_article_form.twig', ['categories' => $categories]
+        );
     }
 }
