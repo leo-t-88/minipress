@@ -21,6 +21,7 @@ return function (App $app): App {
     $app->post('/signin', PostSigninAction::class)->setName('signin_post');
     $app->get('/article/create', GetCreateArticleAction::class)->setName('form_article');
     $app->post('/article/create', PostCreateArticleAction::class)->setName('post_article');
+    $app->get('/article/view/{id}', GetViewArticleAction::class)->setName('form_article');
     $app->get('/articles', GetArticlesListAction::class)->setName('liste_articles');
     $app->get('/logout', LogoutAction::class)->setName('logout');
     $app->get('/categories/create', GetCreateCategorieAction::class)->setName('categorie_create');
