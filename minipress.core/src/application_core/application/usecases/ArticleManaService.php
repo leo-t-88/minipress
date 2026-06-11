@@ -12,7 +12,7 @@ use mp\core\domain\entities\Article;
 class ArticleManaService implements ArticleManaInterface
 {
 
-      public function createArticle(string $titre, ?string $resume, string $contenu, int $createur_id): array
+      public function createArticle(string $titre, ?string $resume, string $contenu, int $createur_id, ?int $categorie_id = null): array
       {
             //verifier si il est connecté
 
@@ -22,7 +22,7 @@ class ArticleManaService implements ArticleManaInterface
                   $article->resume = $resume;
                   $article->contenu = $contenu;
                   $article->auteur_id = $createur_id;
-                  $article->categorie_id = null;
+                  $article->categorie_id = $categorie_id;
 
                   $article->save();
 
@@ -36,11 +36,10 @@ class ArticleManaService implements ArticleManaInterface
       public function getArticle(string $id): array
       {
             try {
-                  $article = Article::with('id')->findOrFail($id);
-
+                  $article = Article::findOrFail($id);
                   return $article->toArray();
             } catch (ModelNotFoundException $e) {
-                  throw new NotFoundException("Article non trouvée dans la base de donnée.");
+                  throw new NotFoundException("Article non trouvé dans la base de données.");
             } catch (Exception $e) {
                   throw new DataErrorException("Erreur lors de la récupération de l'article");
             }

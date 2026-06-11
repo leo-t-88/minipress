@@ -17,17 +17,24 @@ class PostArticleAction extends AbstractAction
         $titre = filter_var($data['titre'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
         $resume = filter_var($data['resume'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
         $contenu = filter_var($data['contenu'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
+        $categorie_id = filter_var($data['categorie_id'] ?? null, FILTER_VALIDATE_INT);
 
+        if ($categorie_id === false) {
+            $categorie_id = null;
+        }
+        
         if (empty($titre) || empty($contenu)) {
             throw new \InvalidArgumentException("Le titre et le contenu sont obligatoires.");
         }
 
-        // Si l'utilisateur laisse "-- Choisir une catégorie --"
-        // l'ID sera vide : étape 1 ou 2 à choisir.
-        $categorie_id = filter_var($data['categorie_id'] ?? null, FILTER_VALIDATE_INT);
-
         try {
-            $article = (new ArticleManaService())->createArticle($titre, $resume, $contenu, $_SESSION['user_id']);    
+            $article = (new ArticleManaService())->createArticle(
+                $titre, 
+                $resume, 
+                $contenu, 
+                (int)$_SESSION['user_id'], 
+                $categorie_id
+            );    
             
         } catch (\Exception $e) {
             throw new \RuntimeException("Erreur lors de la sauvegarde de l'article : " . $e->getMessage());

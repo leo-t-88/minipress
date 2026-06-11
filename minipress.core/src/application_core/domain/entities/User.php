@@ -2,14 +2,15 @@
 declare(strict_types=1);
 
 namespace mp\core\domain\entities;
-use \Illuminate\Database\Eloquent as Eloq;
+use Illuminate\Database\Eloquent as Eloq;
 
-class User extends Eloq\Model {
-      protected $table = 'User';
-      protected $primaryKey = 'id';
-      public $timestamps = false;
+class User extends Eloq\Model{
+    protected $table = "User";
+    protected $primaryKey = "id";
+    public $timestamps = false;
 
-      public function articles() {
-            return $this->hasMany(Article::class, 'auteur_id');
-      }
+    public function articles()
+    {
+        return $this->hasMany(Article::class, "auteur_id");
+    }
 }
