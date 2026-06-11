@@ -9,21 +9,24 @@ use Exception;
 use mp\core\domain\entities\Article;
 
 
-interface ArticleManaService extends ArticleManaInterface
+class ArticleManaService implements ArticleManaInterface
 {
 
-      public function createArticle(string $titre, ?string $resume, string $contenu, string $createur_id): array
+      public function createArticle(string $titre, ?string $resume, string $contenu, int $createur_id): array
       {
             //verifier si il est connecté
 
             try {
                   $article = new Article();
-                  $article->id = bin2hex(random_bytes(16));
                   $article->titre = $titre;
                   $article->resume = $resume;
                   $article->contenu = $contenu;
                   $article->auteur_id = $createur_id;
                   $article->categorie_id = null;
+
+                  $article->save();
+
+                  return $article->toArray();
 
             } catch (Exception $e) {
                   throw new DataErrorException("Erreur lors de la création de l'article " . $e->getMessage());

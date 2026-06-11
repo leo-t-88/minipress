@@ -6,7 +6,7 @@ namespace mp\webui\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Routing\RouteContext;
-use mp\core\domain\entities\Article;
+use mp\core\application\usecases\ArticleManaService;
 
 class PostArticleAction extends AbstractAction
 {
@@ -23,12 +23,7 @@ class PostArticleAction extends AbstractAction
         }
 
         try {
-            $article = new Article();
-            $article->titre = $titre;
-            $article->resume = $resume;
-            $article->contenu = $contenu;
-            
-            $article->save();
+            $article = (new ArticleManaService())->createArticle($titre, $resume, $contenu, $_SESSION['user_id']);    
             
         } catch (\Exception $e) {
             throw new \RuntimeException("Erreur lors de la sauvegarde de l'article : " . $e->getMessage());
@@ -37,8 +32,7 @@ class PostArticleAction extends AbstractAction
         $routeContext = RouteContext::fromRequest($request);
         $routeParser = $routeContext->getRouteParser();
         
-        $url = $routeParser->urlFor('liste_articles'); 
-
+        $url = $routeParser->urlFor('form_article'); 
         return $response->withHeader('Location', $url)->withStatus(302);
     }
 }

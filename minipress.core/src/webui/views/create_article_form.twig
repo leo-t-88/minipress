@@ -18,24 +18,4 @@
     </br>
     <a href="{{ url_for('form_article') }}">Annuler</a>
 </form>
-
-<script>
-    const checkbox = document.getElementById('kdo');
-    const wrapper = document.getElementById('message_kdo_wrapper');
-    const textarea = document.getElementById('message_kdo');
-
-    function toggleMessage() {
-        if (checkbox.checked) {
-            wrapper.style.display = 'block';
-            textarea.setAttribute('required', 'required');
-        } else {
-            wrapper.style.display = 'none';
-            textarea.removeAttribute('required');
-        }
-    }
-
-    toggleMessage();
-    checkbox.addEventListener('change', toggleMessage);
-</script>
-
 {% endblock %}
