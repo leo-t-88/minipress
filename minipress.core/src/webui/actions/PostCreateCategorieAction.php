@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace mp\webui\actions;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use Slim\Routing\RouteContext;
 
@@ -15,7 +15,7 @@ use mp\core\application\exceptions\CsrfException;
 use mp\core\application\exceptions\DataErrorException;
 
 class PostCreateCategorieAction {
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
 
