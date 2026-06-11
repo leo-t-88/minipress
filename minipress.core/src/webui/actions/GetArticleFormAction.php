@@ -17,7 +17,6 @@ class GetArticleFormAction extends AbstractAction
         $categories = Categorie::all();
 
         $view = Twig::fromRequest($request);
-
         return $view->render($response, 'create_article_form.twig', [
             'categories' => $categories,
             'csrf_token' => CsrfTokenProvider::generate()

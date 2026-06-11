@@ -40,7 +40,7 @@ class PostArticleAction extends AbstractAction
         
         try {
             CsrfTokenProvider::check($csrf);
-
+            
             $article = (new ArticleManaService())->createArticle($titre, $resume, $contenu, (int)$_SESSION['user_id'], $categorie_id);  
         } catch (CsrfException | DataErrorException $e) {
             throw new HttpBadRequestException($request, $e->getMessage());
