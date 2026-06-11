@@ -15,7 +15,7 @@ class GetCreateCategorieAction
     {
         $view = Twig::fromRequest($request);
         
-        return $view->render($response, 'categorie_create.twig', [
+        return $view->render($response, 'create_categorie.twig', [
             'csrf_token' => CsrfTokenProvider::generate()
         ]);
     }
