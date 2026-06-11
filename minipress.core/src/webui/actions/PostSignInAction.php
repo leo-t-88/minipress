@@ -27,7 +27,7 @@ class PostSigninAction
 
         try {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                throw new DataErrorException('Invalid email format');
+                throw new HttpBadRequestException($request, 'Invalid email format');
             }
 
             CsrfTokenProvider::check($csrf);
