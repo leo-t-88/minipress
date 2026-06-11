@@ -7,9 +7,13 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use Slim\Routing\RouteContext;
+use Slim\exception\HttpForbiddenException;
+use Slim\exception\HttpBadRequestException;
 
 use mp\webui\providers\CsrfTokenProvider;
-
+use mp\webui\providers\AuthnProvider;
+use mp\core\application\usecases\AuthzInterface;
+use mp\core\application\usecases\AuthzService;
 use mp\core\application\usecases\CategorieService;
 use mp\core\application\exceptions\CsrfException;
 use mp\core\application\exceptions\DataErrorException;
@@ -20,7 +24,12 @@ class PostCreateCategorieAction {
         $data = $request->getParsedBody();
 
         $label = trim($data['label'] ?? '');
-        $csrf = $data['csrf'] ?? '';
+        $csrf = $data['csrf_token'] ?? '';
+
+        $authzService = new AuthzService();
+        if (!$authzService->isGranted(AuthnProvider::getSignedInUser(), AuthzInterface::CREATE_CATEGORY)) {
+            throw new HttpForbiddenException($request, 'Action non autorisée');
+        }
 
         try {
             CsrfTokenProvider::check($csrf);
@@ -36,11 +45,7 @@ class PostCreateCategorieAction {
                 ->withStatus(302);
 
         } catch (CsrfException | DataErrorException $e) {
-            return Twig::fromRequest($request)->render($response, 'categorieCreate.twig', [
-                'error' => $e->getMessage(),
-                'csrf' => CsrfTokenProvider::generate(),
-                'old_label' => $label
-            ]);
+            throw new HttpBadRequestException($request, $e->getMessage());
         }
     }
 }

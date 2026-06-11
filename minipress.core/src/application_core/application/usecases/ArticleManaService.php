@@ -11,11 +11,8 @@ use mp\core\domain\entities\Article;
 
 class ArticleManaService implements ArticleManaInterface
 {
-
       public function createArticle(string $titre, ?string $resume, string $contenu, int $createur_id, ?int $categorie_id = null): array
       {
-            //verifier si il est connecté
-
             try {
                   $article = new Article();
                   $article->titre = $titre;
