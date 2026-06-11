@@ -22,6 +22,10 @@ class PostArticleAction extends AbstractAction
             throw new \InvalidArgumentException("Le titre et le contenu sont obligatoires.");
         }
 
+        // Si l'utilisateur laisse "-- Choisir une catégorie --"
+        // l'ID sera vide : étape 1 ou 2 à choisir.
+        $categorie_id = filter_var($data['categorie_id'] ?? null, FILTER_VALIDATE_INT);
+
         try {
             $article = new Article();
             $article->titre = $titre;
@@ -35,10 +39,9 @@ class PostArticleAction extends AbstractAction
         }
 
         $routeContext = RouteContext::fromRequest($request);
-        $routeParser = $routeContext->getRouteParser();
-        
-        $url = $routeParser->urlFor('liste_articles'); 
+        $routeParser = $routeContext->getRouteParser(); 
+        $url = $routeParser->urlFor('form_article');
 
-        return $response->withHeader('Location', $url)->withStatus(302);
+        return $response->withHeader('Location', $url)->withStatus(302);    
     }
 }

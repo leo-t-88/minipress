@@ -1,0 +1,24 @@
+{% extends 'layout.twig' %}
+
+{% block title %}MiniPress - Liste des Articles{% endblock %}
+
+{% block content %}
+    <h2>Tous les articles</h2>
+
+    <p><a href="{{ url_for('form_article') }}" class="btn-add"> Créer un nouvel article</a></p>
+
+    {% if articles is empty %}
+        <p>Aucun article n'a été publié pour le moment.</p>
+    {% else %}
+        <ul class="articles-list">
+            {% for article in articles %}
+                <li>
+                    <strong>{{ article.titre }}</strong> 
+                    <span class="article-date">(Créé le : {{ article.date_creation }})</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p><a href="{{ url_for('home') }}">Retour à l'accueil</a></p>
+{% endblock %}
