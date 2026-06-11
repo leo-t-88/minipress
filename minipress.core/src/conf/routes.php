@@ -27,10 +27,10 @@ return function (App $app): App {
     $app->get('/categories/create', GetCreateCategorieAction::class)->setName('categorie_create');
     $app->post('/categories/create', PostCreateCategorieAction::class)->setName('categorie_store');
     
-    $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
 
     // Api
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
+    $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
 
     return $app;
 };
