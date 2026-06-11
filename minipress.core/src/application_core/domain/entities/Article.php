@@ -2,22 +2,25 @@
 declare(strict_types=1);
 
 namespace mp\core\domain\entities;
-use \Illuminate\Database\Eloquent as Eloq;
+use Illuminate\Database\Eloquent as Eloq;
 
-class Article extends Eloq\Model {
-      protected $table = 'Article';
-      protected $primaryKey = 'id';
-      public $timestamps = false;
+class Article extends Eloq\Model{
+    protected $table = "Article";
+    protected $primaryKey = "id";
+    public $timestamps = false;
 
-      public function auteur() {
-            return $this->belongsTo(User::class, 'auteur_id');
-      }
+    public function auteur()
+    {
+        return $this->belongsTo(User::class, "auteur_id");
+    }
 
-      public function categorie() {
-            return $this->belongsTo(Categorie::class, 'categorie_id');
-      }
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class, "categorie_id");
+    }
 
-      public function images() {
-            return $this->hasMany(Image::class, 'article_id');
-      }
+    public function images()
+    {
+        return $this->hasMany(Image::class, "article_id");
+    }
 }
