@@ -61,4 +61,9 @@ class ArticleManaService implements ArticleManaInterface
                   throw new DataErrorException("Erreur lors de la validation de la box");
             }
       }
+
+      public function getArticles(): array
+      {
+            return Article::all()->toArray();
+      }
 }
