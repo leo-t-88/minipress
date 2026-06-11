@@ -14,6 +14,15 @@
     </br>
     <input type="contenu" id="contenu" name="contenu" value="{{ old.contenu ?? '' }}" placeholder="Contenu" required>
     </br>
+    <select id="categorie_id" name="categorie_id">
+        <option value="">-- Choisir une catégorie --</option>
+        {% for cat in categories %}
+            <option value="{{ cat.id }}" {% if old.categorie_id == cat.id %}selected{% endif %}>
+                {{ cat.nom }}
+            </option>
+        {% endfor %}
+    </select>
+    </br>
     <button type="submit">Créer l'article</button>
     </br>
     <a href="{{ url_for('form_article') }}">Annuler</a>
