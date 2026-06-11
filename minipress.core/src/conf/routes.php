@@ -12,9 +12,9 @@ use mp\webui\actions\PostCreateCategorieAction;
 return function (App $app): App {
     $app->get('/', GetHomeAction::class)->setName('home');
     $app->get('/signin', GetSigninAction::class)->setName('signin');
-    $app->post('/signin', PostSigninAction::class)->setName('signin.post');
+    $app->post('/signin', PostSigninAction::class);
     $app->get('/logout', LogoutAction::class)->setName('logout');
-    $app->get('/categories/create', GetCreateCategorieAction::class)->setName('categorie.create');
-    $app->post('/categories/create', PostCreateCategorieAction::class)->setName('categorie.store');
+    $app->get('/categories/create', GetCreateCategorieAction::class)->setName('categorie_create');
+    $app->post('/categories/create', PostCreateCategorieAction::class)->setName('categorie_store');
     return $app;
 };

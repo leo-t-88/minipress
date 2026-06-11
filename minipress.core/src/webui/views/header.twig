@@ -1,18 +1,27 @@
-<h2>MiniPress</h2>
-
+<input type="checkbox" id="menu-toggle">
+<div id="header-title">
+    <label for="menu-toggle">
+        <svg viewBox="35 35 35 35" xmlns="http://www.w3.org/2000/svg">
+            <path class="line1" d="M0 40h62c13 0 6 28-4 18L35 35" />
+            <path class="line2" d="M0 50h70" />
+            <path class="line3" d="M0 60h62c13 0 6-28-4-18L35 65" />
+        </svg>
+    </label>
+    <h2>MiniPress</h2>
+</div>
 {% if user %}
-<p>Bonjour {{ user.nom }}</p>
+<h4>Bonjour {{ user.nom }}</h4>
 {% endif %}
 
 <nav>
     <ul>
-        {% if user %}
-        <li><a href="{{ url_for('logout') }}">Déconnexion</a></li>
-        {% else %}
+        {% if not user %}
         <li><a href="{{ url_for('signin') }}">Se connecter</a></li>
-        {% endif %}
+        {% else %}
         {% for item in menu %}
-        <li><a href="{{ url_for('item.route') }}">{{ item.label }}</a></li>
+        <li><a href="{{ url_for(item.route) }}">{{ item.label }}</a></li>
         {% endfor %}
+        <li><a href="{{ url_for('logout') }}">Se déconnecter</a></li>
+        {% endif %}
     </ul>
 </nav>
