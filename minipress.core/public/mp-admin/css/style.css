@@ -24,7 +24,7 @@ header, footer {
 
 
 input, textarea, select {
-    width: 98%;
+    width: 90%;
     padding: 9px;
     margin: 5px 0;
     border-radius: 12px;
@@ -66,7 +66,10 @@ button:hover, input[type="submit"]:hover {
     align-items: center;
 }
 
-header h2, header h4{
+header h2 {
+    margin: 7px;
+}
+header h4{
     margin: 10px 0 20px;
 }
 
@@ -102,13 +105,13 @@ header h2, header h4{
 #menu-toggle:checked + #header-title label > svg .line2 {--offset: -50;}
 
 nav {
-    height: 0px;
+    display: none;
     transform: translateY(-10px);
     transition: .25s ease;
 }
 
 #menu-toggle:checked ~ nav {
-    height: auto;
+    display: block;
     transform: translateY(0);
 }
 
@@ -161,7 +164,7 @@ main {
     }
 
     nav {
-        height: auto;
+        display: block;
     }
 
     main {
