@@ -27,11 +27,10 @@ return function (App $app): App {
     $app->get('/logout', LogoutAction::class)->setName('logout');
     $app->get('/categories/create', GetCreateCategorieAction::class)->setName('categorie_create');
     $app->post('/categories/create', PostCreateCategorieAction::class)->setName('categorie_store');
-    
-    $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
 
     // Api
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
+    $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
     $app->get('/api/articles/{id_a}', ApiArticleId::class )->setName('api_article_id');
     return $app;
 };
