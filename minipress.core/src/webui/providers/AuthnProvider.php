@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace mp\webui\providers;
 
 use mp\core\application\usecases\AuthnService;
-use mp\core\application\exceptions\NotLoggedException;
+use mp\core\application\exceptions\AuthnException;
 
 class AuthnProvider
 {
@@ -16,7 +16,7 @@ class AuthnProvider
 
     public static function getSignedInUser(): int
     {
-        if (!isset($_SESSION['user_id'])) throw new NotLoggedException("Non authentifié");
+        if (!isset($_SESSION['user_id'])) throw new AuthnException("Non authentifié");
 
         return (int) $_SESSION['user_id'];
     }

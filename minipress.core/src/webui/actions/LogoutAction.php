@@ -5,15 +5,14 @@ namespace mp\webui\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Views\Twig;
-use mp\webui\providers\CsrfTokenProvider;
+use Slim\Routing\RouteContext;
 
-class GetSigninAction extends AbstractAction
+class LogoutAction
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        return Twig::fromRequest($request)->render($response, 'signin.twig', [
-            'csrf' => CsrfTokenProvider::generate()
-        ]);
+        unset($_SESSION['user_id']);
+
+        return $response->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor('home'))->withStatus(302);
     }
 }

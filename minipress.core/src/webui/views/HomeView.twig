@@ -1,5 +1,9 @@
 {% extends 'layout.twig' %}
 
 {% block content %}
-    <h1>Accueil</h1>
+<h1>Bienvenue sur MiniPress {{ user.nom }} !</h1>
+<table>
+    <tr><th>MiniPress</th><td>{{ version.mp }}</td></tr>
+    <tr><th>PHP</th><td>{{ version.php }}</td></tr>
+</table>
 {% endblock %}
