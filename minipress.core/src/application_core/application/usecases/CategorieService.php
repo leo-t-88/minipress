@@ -26,4 +26,7 @@ class CategorieService implements CategorieInterface {
 
         return $categorie->toArray();
     }
+    public function getAllCategories(): array{
+        return Categorie::all()->toArray();
+    }
 }
