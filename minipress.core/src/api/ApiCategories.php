@@ -11,10 +11,8 @@ use Slim\Routing\RouteContext;
 
 class ApiCategories
 {
-    public function __invoke(
-        Request $request,
-        Response $response
-    ): Response {
+    public function __invoke(Request $request,Response $response): Response {
+
         $categories = new CategorieService()->getAllCategories();
         $routeParser = RouteContext::fromRequest($request)->getRouteParser();
 
