@@ -13,8 +13,10 @@ class GetCreateCategorieAction
 {
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        return Twig::fromRequest($request)->render($response, 'categorieCreate.twig', [
-            'csrf' => CsrfTokenProvider::generate()
+        $view = Twig::fromRequest($request);
+        
+        return $view->render($response, 'categorie_create.twig', [
+            'csrf_token' => CsrfTokenProvider::generate()
         ]);
     }
 }

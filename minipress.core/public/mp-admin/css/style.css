@@ -23,8 +23,8 @@ header, footer {
 }
 
 
-input, textarea,select {
-    width: 300px;
+input, textarea, select {
+    width: 98%;
     padding: 9px;
     margin: 5px 0;
     border-radius: 12px;
@@ -41,6 +41,10 @@ input:focus, textarea:focus, select:focus {
 
 textarea{
     resize: none;
+}
+
+#contenu{
+    min-height: 450px;
 }
 
 button, input[type="submit"] {
@@ -63,11 +67,7 @@ button:hover, input[type="submit"]:hover {
 }
 
 header h2, header h4{
-    margin: 7px;
-}
-
-header h4{
-    margin-bottom: 30px;
+    margin: 10px 0 20px;
 }
 
 #header-title label {
@@ -130,7 +130,7 @@ nav a {
 }
 
 nav a:hover {
-    border-left: 3px solid var(--txt-color-dark);
+    border-left: 4px solid var(--txt-color-dark);
     background: #2d6cdf;
 }
 
