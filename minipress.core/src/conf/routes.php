@@ -40,7 +40,7 @@ return function (App $app): App {
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
     $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
     $app->get('/api/articles/{id_a}', ApiArticleId::class )->setName('api_article_id');
-    $app->get('/api/categorie/{id}/articles', ApiArticlesCategorie::class )->setName('api_articles_categorie');
+    $app->get('/api/categories/{id_categ}/articles', ApiArticlesCategorie::class )->setName('api_articles_categorie');
     $app->get('/api/auteurs/{id}/articles', ApiArticleAuteur::class )->setName('api_articles_auteur');
     return $app;
 };

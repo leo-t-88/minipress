@@ -22,6 +22,11 @@ header, footer {
     color: var(--txt-color-dark);
 }
 
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 5px;
+}
 
 input, textarea, select {
     width: stretch;
@@ -106,12 +111,6 @@ nav {
 #menu-toggle:checked ~ nav {
     display: block;
     transform: translateY(0);
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
 nav li {

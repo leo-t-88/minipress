@@ -20,23 +20,8 @@ class ApiCategories
         $data = [
             "type" => "collection",
             "count" => count($categories),
-            "categories" => [],
+            "categories" => $categories,
         ];
-
-        foreach ($categories as $categorie) {
-            $data["categories"][] = [
-                "categorie" => [
-                    "id" => $categorie["id"],
-                    "nom" => $categorie["nom"],
-                    "description" => $categorie["description"],
-                ],
-                "links" => [
-                    "self" => [
-                        "href" => $routeParser->urlFor("api_categories") . "/" . $categorie["id"] . "/",
-                    ],
-                ],
-            ];
-        }
 
         $response->getBody()->write(json_encode($data));
 
