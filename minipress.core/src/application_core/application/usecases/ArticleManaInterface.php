@@ -9,4 +9,11 @@ interface ArticleManaInterface {
     public function getArticle(string $id): array;
 
     public function validateArticle(string $id): array;
+    
+    public function getArticles(): array;
+
+    public function getArticleByCategorie(int $id): array;
+
+    public function getArticleByAuteur(int $idd): array;
 }
+

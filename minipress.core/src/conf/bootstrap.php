@@ -38,7 +38,8 @@ $twig->getEnvironment()->addGlobal('user', $user);
 $twig->getEnvironment()->addGlobal('menu', [
     ['label' => 'Accueil', 'route' => 'home'],
     ['label' => 'Articles', 'route' => 'liste_articles'],
-    ['label' => 'Créer une catégorie', 'route' => 'categorie_create']
+    ['label' => 'Créer une catégorie', 'route' => 'categorie_create'],
+    ['label' => 'Créer un utilisateur', 'route' => 'create_user']
 ]);
 
 $app->add(TwigMiddleware::create($app, $twig));

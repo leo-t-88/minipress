@@ -4,4 +4,5 @@ namespace mp\core\application\usecases;
 
 interface AuthnInterface {
     public function signin(string $user_id, string $password): array;
+    public function createUser(string $nom, string $email, string $password, int $role): array;
 }

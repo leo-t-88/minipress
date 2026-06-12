@@ -30,7 +30,7 @@ class ArticleManaService implements ArticleManaInterface
             }
       }
 
-      public function getArticle(string $id): array
+      public function getArticle(int $id): array
       {
             try {
                   $article = Article::findOrFail($id);
@@ -56,5 +56,20 @@ class ArticleManaService implements ArticleManaInterface
             } catch (Exception $e) {
                   throw new DataErrorException("Erreur lors de la validation de la box");
             }
+      }
+
+      public function getArticles(): array
+      {
+            return Article::all()->toArray();
+      }
+
+      public function getArticleByCategorie(int $id): array
+      {
+            return Article::all()->where('auteur_id', $id)->toArray();
+      }
+
+      public function getArticleByAuteur(int $id): array
+      {
+            return Article::where('auteur_id', $id)->get()->toArray();
       }
 }

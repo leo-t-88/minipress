@@ -11,10 +11,15 @@ use mp\webui\actions\GetArticlesListAction;
 use mp\webui\actions\LogoutAction;
 use mp\webui\actions\GetCreateCategorieAction;
 use mp\webui\actions\PostCreateCategorieAction;
+use mp\webui\actions\GetCreateUserAction;
+use mp\webui\actions\PostCreateUserAction;
 
 // Use Api
 use mp\api\ApiCategories;
 use mp\api\ApiArticleId;
+use mp\api\ApiArticles;
+use mp\api\ApiArticlesCategorie;
+use mp\api\ApiArticleAuteur;
 
 return function (App $app): App {
     $app->get('/', GetHomeAction::class)->setName('home');
@@ -27,9 +32,15 @@ return function (App $app): App {
     $app->get('/logout', LogoutAction::class)->setName('logout');
     $app->get('/categories/create', GetCreateCategorieAction::class)->setName('categorie_create');
     $app->post('/categories/create', PostCreateCategorieAction::class)->setName('categorie_store');
+    $app->get('/user/create', GetCreateUserAction::class)->setName('create_user');
+    $app->post('/user/create', PostCreateUserAction::class)->setName('create_user_post');
 
     // Api
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
+    $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
     $app->get('/api/articles/{id_a}', ApiArticleId::class )->setName('api_article_id');
+    $app->get('/api/categorie/{id}/articles', ApiArticlesCategorie::class )->setName('api_articles_categorie');
+    $app->get('/api/auteurs/{id}/articles', ApiArticleAuteur::class )->setName('api_articles_auteur');
+
     return $app;
 };
