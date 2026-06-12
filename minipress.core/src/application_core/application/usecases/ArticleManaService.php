@@ -66,7 +66,6 @@ class ArticleManaService implements ArticleManaInterface
 
                   $articles = Article::orderBy('date_creation', 'DESC');
 
-                  if ($user->role < 50) $articles->where('auteur_id', $user->id);
                   if ($categorie_id !== null) $articles->where('categorie_id', $categorie_id);
 
                   return $articles->get()->toArray();

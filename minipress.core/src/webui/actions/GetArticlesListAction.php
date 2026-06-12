@@ -15,6 +15,8 @@ use mp\core\application\exceptions\DataErrorException;
 use mp\core\application\exceptions\NotFoundException;
 use mp\core\application\usecases\ArticleManaService;
 use mp\core\application\usecases\CategorieService;
+use mp\core\application\usecases\AuthzInterface;
+use mp\core\application\usecases\AuthzService;
 use mp\webui\providers\AuthnProvider;
 use mp\webui\providers\CsrfTokenProvider;
 
@@ -27,7 +29,11 @@ class GetArticlesListAction extends AbstractAction
         $categorie_id = ($categorie_id === false) ? null : $categorie_id;
 
         try{
-            $articles = (new ArticleManaService)->getArticles(AuthnProvider::getSignedInUser(), $categorie_id);
+            $userId = AuthnProvider::getSignedInUser();
+            $articles = (new ArticleManaService)->getArticles($userId, $categorie_id);
+
+            $authz = new AuthzService();
+            foreach ($articles as $i => $article) $articles[$i]['can_toggle'] = $authz->isGranted($userId, AuthzInterface::TOOGLE_ARTICLE, $article['id']);
         } catch (AuthnException $e) {
             throw new HttpUnauthorizedException($request, $e->getMessage());
         } catch (DataErrorException $e) {
