@@ -12,5 +12,6 @@ interface ArticleManaInterface {
     
     public function getArticles(): array;
 
-    public function getArticleByCategorie($id): array;
+    public function getArticleByCategorie(int $id): array;
 }
+

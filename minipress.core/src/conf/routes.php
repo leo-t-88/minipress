@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use mp\api\ApiArticles;
 use Slim\App;
 use mp\webui\actions\GetHomeAction;
 use mp\webui\actions\GetSigninAction;
@@ -15,6 +14,8 @@ use mp\webui\actions\PostCreateCategorieAction;
 
 // Use Api
 use mp\api\ApiCategories;
+use mp\api\ApiArticles;
+use mp\api\ApiArticlesCategorie;
 
 return function (App $app): App {
     $app->get('/', GetHomeAction::class)->setName('home');
@@ -31,6 +32,7 @@ return function (App $app): App {
     // Api
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
     $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
+    $app->get('/api/articles/{id}/categorie', ApiArticlesCategorie::class )->setName('api_articles_categorie');
 
     return $app;
 };

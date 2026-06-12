@@ -66,8 +66,8 @@ class ArticleManaService implements ArticleManaInterface
             return Article::all()->toArray();
       }
 
-      public function getArticleByCategorie($id): array
+      public function getArticleByCategorie(int $id): array
       {
-            return Article::all()::where('auteur_id', $id);
+            return Article::all()->where('auteur_id', $id)->toArray();
       }
 }
