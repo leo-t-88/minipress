@@ -17,6 +17,7 @@ use mp\api\ApiCategories;
 use mp\api\ApiArticleId;
 use mp\api\ApiArticles;
 use mp\api\ApiArticlesCategorie;
+use mp\api\ApiArticleAuteur;
 
 return function (App $app): App {
     $app->get('/', GetHomeAction::class)->setName('home');
@@ -33,7 +34,8 @@ return function (App $app): App {
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');
     $app->get('/api/articles', ApiArticles::class )->setName('api_articles');
     $app->get('/api/articles/{id_a}', ApiArticleId::class )->setName('api_article_id');
-    $app->get('/api/articles/{id}/categorie', ApiArticlesCategorie::class )->setName('api_articles_categorie');
+    $app->get('/api/categorie/{id}/articles', ApiArticlesCategorie::class )->setName('api_articles_categorie');
+    $app->get('/api/auteurs/{id}/articles', ApiArticleAuteur::class )->setName('api_articles_auteur');
 
     return $app;
 };
