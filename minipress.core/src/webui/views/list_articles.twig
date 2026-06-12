@@ -5,7 +5,7 @@
 {% block content %}
     <h2>Tous les articles</h2>
 
-    <form action="{{ url_for('liste_articles') }}" method="get" class="filter-form">
+    <form action="{{ url_for('liste_articles') }}" method="get">
         <label for="filter_categorie">Filtrer par catégorie :</label>
         <select id="filter_categorie" name="categorie_id" onchange="this.form.submit()">
             <option value="">Toutes les catégories</option>
@@ -19,11 +19,21 @@
     {% if articles is empty %}
         <p>Aucun article ne correspond à cette catégorie ou aucun article n'a été publié.</p>
     {% else %}
-        <ul class="articles-list">
+        <ul class="article_list">
             {% for article in articles %}
                 <li>
                     <strong>{{ article.titre }}</strong> 
-                    <span class="article-date">(Créé le : {{ article.date_creation }})</span>
+                    <span>(Créé le : {{ article.date_creation }})</span>
+                    {% if article.can_toggle %}
+                    <form action="{{ url_for('article_toggle_publish', { id: article.id }) }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        {% if article.date_publication == null %}
+                        <button type="submit">Publier l'article</button>
+                        {% else %}
+                        <button type="submit" class="warnbtn">Depublier l'article</button>
+                        {% endif %}
+                    </form>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>

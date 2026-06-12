@@ -13,7 +13,7 @@ class ApiCategories
 {
     public function __invoke(Request $request,Response $response): Response {
 
-        $categories = new CategorieService()->getAllCategories();
+        $categories = (new CategorieService())->getAllCategories();
 
         $routeParser = RouteContext::fromRequest($request)->getRouteParser();
 

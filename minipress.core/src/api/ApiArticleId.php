@@ -10,7 +10,11 @@ use mp\core\application\usecases\ArticleManaService;
 class ApiArticleId
 {
     public function __invoke(Request $request, Response $response, array $args): Response {
+<<<<<<< HEAD
         $id = (string) $args['id'];
+=======
+        $id = (int) $args['id'];
+>>>>>>> publish_art
         $article = (new ArticleManaService())->getArticle($id);
 
         $data = [

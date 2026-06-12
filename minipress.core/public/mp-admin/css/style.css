@@ -39,17 +39,11 @@ input:focus, textarea:focus, select:focus {
     box-shadow: 0 0 8px rgba(59,130,246,0.3);
 }
 
-textarea{
-    resize: none;
-}
+textarea{ resize: none; }
 
-p {
-    margin: 5px;
-}
+p {  margin: 5px; }
 
-#contenu{
-    min-height: 300px;
-}
+#contenu{ min-height: 300px; }
 
 button, input[type="submit"] {
     font-size: 1rem;
@@ -60,9 +54,10 @@ button, input[type="submit"] {
     border-radius: 20px;
 }
 
-button:hover, input[type="submit"]:hover {
-    background-color: #6988ed;
-}
+button:hover, input[type="submit"]:hover {  background-color: #6988ed; }
+
+.warnbtn { background-color: #f08585; }
+.warnbtn:hover { background-color: #ed6969; }
 
 /* Header */
 #header-title{
@@ -70,12 +65,8 @@ button:hover, input[type="submit"]:hover {
     align-items: center;
 }
 
-header h2 {
-    margin: 7px;
-}
-header h4{
-    margin: 10px 0 15px;
-}
+header h2 { margin: 15px 7px; }
+header h4{ margin: 10px 0 15px; }
 
 #header-title label {
     display: flex;
@@ -97,9 +88,7 @@ header h4{
     transition: all .3s cubic-bezier(.645, .045, .355, 1);
 }
 
-#header-title label:hover circle {
-  opacity: 1;
-}
+#header-title label:hover circle { opacity: 1; }
 
 #menu-toggle:checked + #header-title label > svg .line1, #menu-toggle:checked + #header-title label > svg .line3 {--length: 22.627416998;}
 #menu-toggle:checked + #header-title label > svg .line2 {--length: 0;}
@@ -149,6 +138,13 @@ main {
     overflow-y: auto;
     height: 100%;
     color: var(--txt-color-light);
+}
+
+.article_list li{
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
 }
 
 @media screen and (min-width: 900px) {

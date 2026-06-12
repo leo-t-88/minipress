@@ -9,6 +9,7 @@ use mp\webui\providers\AuthnProvider;
 use mp\core\application\usecases\AuthzInterface;
 use mp\core\application\usecases\AuthzService;
 use mp\core\application\exceptions\AuthnException;
+use Slim\Exception\HttpUnauthorizedException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Views\Twig;
 
@@ -26,7 +27,7 @@ class GetCreateUserAction
                 throw new HttpForbiddenException($request, "action non autorisée");
             }
         } catch (AuthnException $e) {
-            throw new HttpForbiddenException($request, $e->getMessage());
+            throw new HttpUnauthorizedException($request, $e->getMessage());
         }
 
         $view = Twig::fromRequest($request);

@@ -7,7 +7,7 @@ use mp\core\application\exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 use mp\core\domain\entities\Article;
-
+use mp\core\domain\entities\User;
 
 class ArticleManaService implements ArticleManaInterface
 {
@@ -42,25 +42,36 @@ class ArticleManaService implements ArticleManaInterface
             }
       }
 
-      public function validateArticle(string $id): array
-      {
+      public function togglePublication(int $id): void {
             try {
-                  $article = Article::with('id')->findOrFail($id);
+                  $article = Article::findOrFail($id);
 
-                  $article->validate();
+                  if ($article->date_publication === null) {
+                        $article->date_publication = date('Y-m-d H:i:s');
+                  } else {
+                        $article->date_publication = null;
+                  }
+
                   $article->save();
-
-                  return $article->toArray();
             } catch (ModelNotFoundException $e) {
-                  throw new NotFoundException("Box non trouvée dans la base de donnée.");
+                  throw new NotFoundException("Article non trouvé dans la base de données.");
             } catch (Exception $e) {
-                  throw new DataErrorException("Erreur lors de la validation de la box");
+                  throw new DataErrorException("Erreur lors du changement d'état de publication de l'article.");
             }
       }
 
-      public function getArticles(): array
-      {
-            return Article::all()->toArray();
+      public function getArticles(?int $categorie_id = null) : array{
+            try {
+                  $articles = Article::orderBy('date_creation', 'DESC');
+
+                  if ($categorie_id !== null) $articles->where('categorie_id', $categorie_id);
+
+                  return $articles->get()->toArray();
+            } catch (ModelNotFoundException $e) {
+                  throw new NotFoundException("Article non trouvée dans la base de données.");
+            } catch (Exception $e) {
+                  throw new DataErrorException("Erreur lors de la validation de l'article");
+            }
       }
 
       public function getArticleByCategorie(int $id): array
