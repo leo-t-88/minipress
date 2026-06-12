@@ -21,6 +21,17 @@ $user = null;
 try {
     if (isset($_SESSION['user_id'])) {
         $user = User::findOrFail($_SESSION['user_id']);
+        if ($user) {
+            $role = (int) $user['role'];
+
+            if ($role === 100) {
+                $user['role_name'] = 'Super Admin';
+            } elseif ($role >= 50) {
+                $user['role_name'] = 'Admin';
+            } else {
+                $user['role_name'] = 'Auteur';
+            }
+        }
     }
 } catch (ModelNotFoundException $e) {
     unset($_SESSION['user_id']);

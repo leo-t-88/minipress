@@ -25,8 +25,8 @@ return function (App $app): App {
     $app->get('/article/view/{id}', GetViewArticleAction::class)->setName('form_article');
     $app->get('/articles', GetArticlesListAction::class)->setName('liste_articles');
     $app->get('/logout', LogoutAction::class)->setName('logout');
-    $app->get('/categories/create', GetCreateCategorieAction::class)->setName('categorie_create');
-    $app->post('/categories/create', PostCreateCategorieAction::class)->setName('categorie_store');
+    $app->get('/categorie/create', GetCreateCategorieAction::class)->setName('categorie_create');
+    $app->post('/categorie/create', PostCreateCategorieAction::class)->setName('categorie_store');
 
     // Api
     $app->get('/api/categories', ApiCategories::class )->setName('api_categories');

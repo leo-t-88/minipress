@@ -7,7 +7,7 @@ use mp\core\application\exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 use mp\core\domain\entities\Article;
-
+use mp\core\domain\entities\User;
 
 class ArticleManaService implements ArticleManaInterface
 {
@@ -52,7 +52,24 @@ class ArticleManaService implements ArticleManaInterface
 
                   return $article->toArray();
             } catch (ModelNotFoundException $e) {
-                  throw new NotFoundException("Box non trouvée dans la base de donnée.");
+                  throw new NotFoundException("Article non trouvée dans la base de donnée.");
+            } catch (Exception $e) {
+                  throw new DataErrorException("Erreur lors de la validation de la Article");
+            }
+      }
+
+      public function getArticles($userId, ?int $categorie_id = null){
+            try {
+                  $user = User::findOrFail($userId);
+
+                  $articles = Article::orderBy('date_creation', 'DESC');
+
+                  if ($user->role < 50) $articles->where('auteur_id', $user->id);
+                  if ($categorie_id !== null) $articles->where('categorie_id', $categorie_id);
+
+                  return $articles->get()->toArray();
+            } catch (ModelNotFoundException $e) {
+                  throw new NotFoundException("Article non trouvée dans la base de donnée.");
             } catch (Exception $e) {
                   throw new DataErrorException("Erreur lors de la validation de la box");
             }

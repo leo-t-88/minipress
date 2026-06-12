@@ -19,11 +19,6 @@ class AuthzService implements AuthzInterface
                     return $user['role'] >= 1;
                 case self::REGISTER_USER:
                     return $user['role'] === 100;
-                case self::VIEW_ARTICLE:
-                    $article = Article::findOrFail($article_id);
-                    if ($user['role'] === 100) return true; // ADMIN
-                    return $user['id'] === $article['auteur_id'];
-
             }
         } catch (QueryException $e) {
             throw new DataErrorException('Pas d\'article avec cette id');
