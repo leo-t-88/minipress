@@ -30,7 +30,7 @@ class GetArticlesListAction extends AbstractAction
 
         try{
             $userId = AuthnProvider::getSignedInUser();
-            $articles = (new ArticleManaService)->getArticles($categorie_id, false);
+            $articles = (new ArticleManaService)->getArticles($categorie_id, null, false);
 
             $authz = new AuthzService();
             foreach ($articles as $i => $article) $articles[$i]['can_toggle'] = $authz->isGranted($userId, AuthzInterface::TOOGLE_ARTICLE, $article['id']);

@@ -15,17 +15,12 @@ class ApiArticles
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         try {
-            $articles = (new ArticleManaService())->getArticles();
             $routeParser = RouteContext::fromRequest($request)->getRouteParser();
 
             $queryParams = $request->getQueryParams();
             $sort = $queryParams['sort'] ?? null;
-            $articles = match ($sort) {
-                'date_asc' => $this->trierParDate($articles, true),
-                'date_desc' => $this->trierParDate($articles, false),
-                'auteur' => $this->trierParAuteur($articles),
-                default => $articles
-            };
+
+            $articles = (new ArticleManaService())->getArticles(null, $sort);
 
             $data = [
                 'type' => 'collection',
@@ -59,23 +54,5 @@ class ApiArticles
         } catch (NotFoundException $e) {
             throw new HttpNotFoundException($request, $e->getMessage());
         }
-    }
-
-    private function trierParDate(array $liste, bool $asc): array
-    {
-        usort($liste, function ($a, $b) use ($asc) {
-            if (empty($a['date_publication']))
-                return 1;
-            if (empty($b['date_publication']))
-                return -1;
-            return $asc ? strtotime($a['date_publication']) - strtotime($b['date_publication']) : strtotime($b['date_publication']) - strtotime($a['date_publication']);
-        });
-        return $liste;
-    }
-
-    private function trierParAuteur(array $liste): array
-    {
-        usort($liste, fn($a, $b) => $a['auteur_id'] - $b['auteur_id']);
-        return $liste;
     }
 }
