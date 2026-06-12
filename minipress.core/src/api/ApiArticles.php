@@ -8,12 +8,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use mp\core\application\exceptions\NotFoundException;
 use Slim\Exception\HttpNotFoundException;
 use mp\core\application\usecases\ArticleManaService;
+use Slim\Routing\RouteContext;
 
 class ApiArticles
 {
     public function __invoke(Request $request, Response $response, array $args): Response {
         try {    
             $articles = (new ArticleManaService())->getArticles();
+            $routeParser = RouteContext::fromRequest($request)->getRouteParser();
 
             $data = [
                 'type' => 'collection',
@@ -35,9 +37,9 @@ class ApiArticles
                     ],
                     'links' => [
                         'self' => [
-                            'href' => '/articles/' . $a['id'] . '/'
+                            'href' => $routeParser->urlFor("api_articles") . "/" . $a['id'] . '/'
                         ]
-                    ]
+                    ],
                 ];
             }
 

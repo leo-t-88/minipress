@@ -11,4 +11,7 @@ interface ArticleManaInterface {
     public function validateArticle(string $id): array;
     
     public function getArticles(): array;
+
+    public function getArticleByCategorie(int $id): array;
 }
+
