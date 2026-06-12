@@ -30,7 +30,7 @@ class ArticleManaService implements ArticleManaInterface
             }
       }
 
-      public function getArticle(string $id): array
+      public function getArticle(int $id): array
       {
             try {
                   $article = Article::findOrFail($id);
@@ -42,23 +42,25 @@ class ArticleManaService implements ArticleManaInterface
             }
       }
 
-      public function validateArticle(string $id): array
-      {
+      public function togglePublication(int $id): void {
             try {
-                  $article = Article::with('id')->findOrFail($id);
+                  $article = Article::findOrFail($id);
 
-                  $article->validate();
+                  if ($article->date_publication === null) {
+                        $article->date_publication = date('Y-m-d H:i:s');
+                  } else {
+                        $article->date_publication = null;
+                  }
+
                   $article->save();
-
-                  return $article->toArray();
             } catch (ModelNotFoundException $e) {
-                  throw new NotFoundException("Article non trouvée dans la base de donnée.");
+                  throw new NotFoundException("Article non trouvé dans la base de données.");
             } catch (Exception $e) {
-                  throw new DataErrorException("Erreur lors de la validation de la Article");
+                  throw new DataErrorException("Erreur lors du changement d'état de publication de l'article.");
             }
       }
 
-      public function getArticles($userId, ?int $categorie_id = null){
+      public function getArticles($userId, ?int $categorie_id = null) : array{
             try {
                   $user = User::findOrFail($userId);
 
@@ -69,9 +71,9 @@ class ArticleManaService implements ArticleManaInterface
 
                   return $articles->get()->toArray();
             } catch (ModelNotFoundException $e) {
-                  throw new NotFoundException("Article non trouvée dans la base de donnée.");
+                  throw new NotFoundException("Article non trouvée dans la base de données.");
             } catch (Exception $e) {
-                  throw new DataErrorException("Erreur lors de la validation de la box");
+                  throw new DataErrorException("Erreur lors de la validation de l'article");
             }
       }
 }

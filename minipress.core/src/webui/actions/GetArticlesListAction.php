@@ -16,6 +16,7 @@ use mp\core\application\exceptions\NotFoundException;
 use mp\core\application\usecases\ArticleManaService;
 use mp\core\application\usecases\CategorieService;
 use mp\webui\providers\AuthnProvider;
+use mp\webui\providers\CsrfTokenProvider;
 
 class GetArticlesListAction extends AbstractAction
 {
@@ -42,7 +43,8 @@ class GetArticlesListAction extends AbstractAction
         return $view->render($response, 'list_articles.twig', [
             'articles' => $articles,
             'categories' => $categories,
-            'current_categorie_id' => $categorie_id
+            'current_categorie_id' => $categorie_id,
+            'csrf_token' => CsrfTokenProvider::generate()
         ]);
     }
 }

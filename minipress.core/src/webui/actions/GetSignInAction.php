@@ -13,7 +13,7 @@ class GetSigninAction extends AbstractAction
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         return Twig::fromRequest($request)->render($response, 'signin.twig', [
-            'csrf' => CsrfTokenProvider::generate()
+            'csrf_token' => CsrfTokenProvider::generate()
         ]);
     }
 }

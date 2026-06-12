@@ -23,7 +23,7 @@ class PostSigninAction extends AbstractAction
 
         $email = filter_var($data['email'] ?? '', FILTER_SANITIZE_EMAIL);
         $password = $data['password'] ?? '';
-        $csrf = $data['csrf'] ?? '';
+        $csrf = $data['csrf_token'] ?? '';
 
         try {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -38,7 +38,7 @@ class PostSigninAction extends AbstractAction
         } catch (CsrfException | AuthnException | HttpBadRequestException $e) {
             return Twig::fromRequest($request)->render($response, 'signin.twig', [
                 'error' => $e->getMessage(),
-                'csrf' => CsrfTokenProvider::generate()
+                'csrf_token' => CsrfTokenProvider::generate()
             ]);
         }
     }

@@ -10,14 +10,13 @@ use mp\core\application\usecases\ArticleManaService;
 class ApiArticleId
 {
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $id = (string) $args['id_a'];
-               $article = (new ArticleManaService())->getArticle($id);
+        $id = (int) $args['id'];
+        $article = (new ArticleManaService())->getArticle($id);
 
-               $data = [
-                "type" => "resource",
-                "article" => $article,
-               ];
-
+        $data = [
+            "type" => "resource",
+            "article" => $article,
+        ];
 
         $response->getBody()->write(json_encode($data));
 

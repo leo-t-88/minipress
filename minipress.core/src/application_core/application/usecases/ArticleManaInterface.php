@@ -6,7 +6,9 @@ interface ArticleManaInterface {
 
     public function createArticle(string $titre, ?string $resume, string $contenu, int $createur_id): array;
 
-    public function getArticle(string $id): array;
+    public function getArticle(int $id): array;
 
-    public function validateArticle(string $id): array;
+    public function togglePublication(int $id): void;
+
+    public function getArticles($userId, ?int $categorie_id = null) : array;
 }
