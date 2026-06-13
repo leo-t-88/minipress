@@ -26,14 +26,9 @@ class ApiArticles
             foreach ($articles as $a) {
                 $data['articles'][] = [
                     'article' => [
-                        'id' => $a['id'],
                         'titre' => $a['titre'],
-                        'resume' => $a['resume'],
-                        'contenu' => $a['contenu'],
                         'date_creation' => $a['date_creation'],
-                        'date_publication' => $a['date_publication'],
-                        'auteur_id' => $a['auteur_id'],
-                        'categorie_id' => $a['categorie_id']
+                        'auteur_id' => $a['auteur_id']
                     ],
                     'links' => [
                         'self' => [

@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Créer un article</h1>
 
-<form action="{{ url_for('form_article') }}" method="post">
+<form action="{{ url_for('create_article_post') }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
     <input type="text" id="titre" name="titre" value="{{ old.titre ?? '' }}" placeholder="Titre" required>

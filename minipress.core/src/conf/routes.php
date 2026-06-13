@@ -26,13 +26,13 @@ return function (App $app): App {
     $app->get('/', GetHomeAction::class)->setName('home');
     $app->get('/signin', GetSigninAction::class)->setName('signin');
     $app->post('/signin', PostSigninAction::class)->setName('signin_post');
-    $app->get('/article/create', GetCreateArticleAction::class)->setName('form_article');
-    $app->post('/article/create', PostCreateArticleAction::class)->setName('post_article');
+    $app->get('/article/create', GetCreateArticleAction::class)->setName('create_article');
+    $app->post('/article/create', PostCreateArticleAction::class)->setName('create_article_post');
     $app->post('/article/toogle_publish/{id}', PostTooglePublishArticleAction::class)->setName('article_toggle_publish');
     $app->get('/articles', GetArticlesListAction::class)->setName('liste_articles');
     $app->get('/logout', LogoutAction::class)->setName('logout');
-    $app->get('/categorie/create', GetCreateCategorieAction::class)->setName('categorie_create');
-    $app->post('/categorie/create', PostCreateCategorieAction::class)->setName('categorie_store');
+    $app->get('/categorie/create', GetCreateCategorieAction::class)->setName('create_categorie');
+    $app->post('/categorie/create', PostCreateCategorieAction::class)->setName('create_categorie_post');
     $app->get('/user/create', GetCreateUserAction::class)->setName('create_user');
     $app->post('/user/create', PostCreateUserAction::class)->setName('create_user_post');
 

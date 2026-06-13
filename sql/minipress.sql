@@ -15,8 +15,7 @@ CREATE TABLE User (
 
 CREATE TABLE Categorie (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT
+    nom VARCHAR(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE Article (
@@ -39,18 +38,5 @@ CREATE TABLE Article (
         FOREIGN KEY (categorie_id)
         REFERENCES categorie(id)
         ON DELETE RESTRICT
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE Image (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    url VARCHAR(500) NOT NULL,
-
-    article_id INT NOT NULL,
-
-    CONSTRAINT fk_image_article
-        FOREIGN KEY (article_id)
-        REFERENCES article(id)
-        ON DELETE CASCADE
         ON UPDATE CASCADE
 );

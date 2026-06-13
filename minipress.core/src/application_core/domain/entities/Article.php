@@ -18,9 +18,4 @@ class Article extends Eloq\Model{
     {
         return $this->belongsTo(Categorie::class, "categorie_id");
     }
-
-    public function images()
-    {
-        return $this->hasMany(Image::class, "article_id");
-    }
 }

@@ -27,7 +27,6 @@ class ApiArticleAuteur {
             foreach ($articles as $a) {
                 $data['articles'][] = [
                     'article' => [
-                        'id' => $a['id'],
                         'titre' => $a['titre'],
                         'date_creation' => $a['date_creation'],
                         'auteur_id' => $a['auteur_id']
