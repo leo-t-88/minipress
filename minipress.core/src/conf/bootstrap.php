@@ -14,6 +14,7 @@ Eloquent::init(__DIR__ . '/minipress.db.conf.ini');
 $app = \Slim\Factory\AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
+$app->setBasePath('');
 
 $user = null;
 
@@ -42,7 +43,7 @@ $twig = Twig::create(__DIR__ . '/../webui/views', [
     'auto_reload' => true,
 ]);
 
-$twig->getEnvironment()->addGlobal('css_path', '/css');
+$twig->getEnvironment()->addGlobal('css_path', $app->getBasePath() . '/css');
 $twig->getEnvironment()->addGlobal('version', ['mp' => '0.0.1', 'php' => PHP_VERSION]);
 $twig->getEnvironment()->addGlobal('user', $user);
 $twig->getEnvironment()->addGlobal('menu', [

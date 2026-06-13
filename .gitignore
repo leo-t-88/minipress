@@ -6,8 +6,11 @@
 !build/php.ini
 
 # ---- Dépendances ----
-minipress.core/src/vendor/
 composer.lock
+minipress.core/src/vendor/
+
+package-lock.json
+minipress.web/node_modules/
 
 # ---- Cache et logs ----
 *.log
