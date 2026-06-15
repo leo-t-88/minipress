@@ -9,3 +9,12 @@ export async function getArticles() {
 
     return response.json();
 }
+
+export async function getCategories() {
+    const response = await fetch(`${API_BASE_URL}/categories`);
+    
+    if (!response.ok) {
+        throw new Error("Erreur lors du chargement des catégories");
+    }
+    return response.json();
+}
