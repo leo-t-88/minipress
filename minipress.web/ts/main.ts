@@ -1,22 +1,22 @@
-import { marked } from "marked";
 
-async function loadArticle() {
-    const res = await fetch("http://docketu.iutnc.univ-lorraine.fr:16797/api/articles/1");
-    const json = await res.json();
+import { getArticles } from "./api";
+import { renderArticles } from "./view";
 
-    let md = json.article.contenu;
+async function init(): Promise<void> {
+    const zone = document.getElementById("articles");
 
-    md = md.replace(/\r\n/g, "\n");
+    try {
+        const response = await getArticles();
 
-    const html = marked.parse(md, { async: false });
+        const sortedArticles = response.articles.sort((a: any, b: any) => {
+            return new Date(b.article.date_creation).getTime() - new Date(a.article.date_creation).getTime();
+        });
 
-    const container = document.getElementById("article");
-    if (container) {
-        container.innerHTML = html;
+        renderArticles(sortedArticles);
+    } catch (error) {
+        console.error(error);
+        if (zone) zone.innerHTML = "<p>Erreur de chargement</p>";
     }
 }
 
-loadArticle();
-
-console.log("JS chargé");
-
+init();
