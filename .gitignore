@@ -4,6 +4,7 @@
 *.lock
 *.ini
 !build/php.ini
+minipress.web/dist/index.js
 
 # ---- Dépendances ----
 composer.lock
@@ -11,7 +12,7 @@ minipress.core/src/vendor/
 
 package-lock.json
 minipress.web/node_modules/
-minipress.web/dist/index.js
+
 # ---- Cache et logs ----
 *.log
 *.cache
