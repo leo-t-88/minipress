@@ -1,5 +1,7 @@
+import { marked } from "marked";
 import Handlebars from "handlebars";
-import { ArticleList } from "./types";
+import { getArticle } from "./api";
+import { Article, ArticleList, CategoryList } from "./types";
 
 export function renderArticles(articles: ArticleList["articles"]): void {
     const zone = document.getElementById("articles");
@@ -7,19 +9,28 @@ export function renderArticles(articles: ArticleList["articles"]): void {
 
     const source = `
         {{#each articles}}
-            <article>
+            <article class="article-item" data-href="{{links.self.href}}">
                 <h2>{{article.titre}}</h2>
                 <p>Date : {{article.date_creation}}</p>
-                <p>Id de l'Auteur : {{article.auteur_id}}</p>
+                <p>Auteur : {{article.auteur_id}}</p>
             </article>
         {{/each}}
     `;
 
     const template = Handlebars.compile(source);
     zone.innerHTML = template({ articles });
+
+    document.querySelectorAll(".article-item").forEach(item => {
+        const href = item.getAttribute("data-href");
+        if (!href) return;
+
+        item.addEventListener("click", () => {
+            showArticle(href);
+        });
+    });
 }
 
-export function renderCategories(categories: any[]): void {
+export function renderCategories(categories: CategoryList["categories"]): void {
     const zone = document.getElementById("categories-list");
     if (!zone) return;
 
@@ -35,4 +46,44 @@ export function renderCategories(categories: any[]): void {
 
     const template = Handlebars.compile(source);
     zone.innerHTML = template({ categories });
+}
+
+export async function showArticle(href: string): Promise<void> {
+    const zone = document.getElementById("current_article");
+    if (!zone) return;
+
+    const json: Article = await getArticle(href);
+    const a = json.article;
+
+    const md = (txt: string) =>
+        marked.parse(txt.replace(/\r\n/g, "\n"), { async: false });
+
+    const source = `
+        <article class="full-article">
+            <h2>{{titre}}</h2>
+            <p><strong>Publié le :</strong> {{date_publication}}</p>
+
+            <div class="contenu">
+                {{{contenu_html}}}
+            </div>
+
+            {{#if resume_html}}
+            <div class="resume">
+                <h3>Résumé</h3>
+                {{{resume_html}}}
+            </div>
+            {{/if}}
+        </article>
+    `;
+
+    const template = Handlebars.compile(source);
+
+    const context = {
+        titre: a.titre,
+        date_publication: a.date_publication,
+        resume_html: a.resume ? md(a.resume) : null,
+        contenu_html: md(a.contenu)
+    };
+
+    zone.innerHTML = template(context);
 }
