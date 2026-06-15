@@ -12,6 +12,7 @@
   "files" : [
     "ts/main.ts",
     "ts/config.ts",
+    "ts/types.ts",
     "ts/api.ts",
     "ts/views.ts"
   ]

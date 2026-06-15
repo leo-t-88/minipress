@@ -3,15 +3,16 @@ import { getArticles, getCategories, getArticlesByCategorie } from "./api";
 import { renderArticles, renderCategories } from "./view";
 import { ArticleList } from "./types";
 
-let displayedArticles: any[] = [];
+let displayedArticles: ArticleList["articles"] = [];
+
 
 function sortAndRenderArticles(order: "ASC" | "DESC"): void {
     if (displayedArticles.length === 0) return;
 
-    displayedArticles.sort((a: any, b: any) => {
+    displayedArticles.sort((a, b) => {
         const timeA = new Date(a.article.date_creation).getTime();
         const timeB = new Date(b.article.date_creation).getTime();
-        
+
         return order === "DESC" ? timeB - timeA : timeA - timeB;
     });
 
