@@ -17,3 +17,21 @@ export function renderArticles(articles: any[]): void {
     const template = Handlebars.compile(source);
     zone.innerHTML = template({ articles });
 }
+
+export function renderCategories(categories: any[]): void {
+    const zone = document.getElementById("categories-list");
+    if (!zone) return;
+
+    const source = `
+        <ul>
+            {{#each categories}}
+                <li class="categorie-item" data-id="{{id}}">
+                    {{nom}}
+                </li>
+            {{/each}}
+        </ul>
+    `;
+
+    const template = Handlebars.compile(source);
+    zone.innerHTML = template({ categories });
+}

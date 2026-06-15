@@ -1,9 +1,10 @@
 
-import { getArticles } from "./api";
-import { renderArticles } from "./view";
+import { getArticles, getCategories } from "./api";
+import { renderArticles, renderCategories } from "./view";
 
 async function init(): Promise<void> {
-    const zone = document.getElementById("articles");
+    const zoneArticles = document.getElementById("articles");
+    const zoneCategories = document.getElementById("categories-list");
 
     try {
         const response = await getArticles();
@@ -15,7 +16,15 @@ async function init(): Promise<void> {
         renderArticles(sortedArticles);
     } catch (error) {
         console.error(error);
-        if (zone) zone.innerHTML = "<p>Erreur de chargement</p>";
+        if (zoneArticles) zoneArticles.innerHTML = "<p>Erreur de chargement</p>";
+    }
+
+    try {
+        const response = await getCategories();
+        renderCategories(response.categories);
+    } catch (error) {
+        console.error(error);
+        if (zoneCategories) zoneCategories.innerHTML = "<p>Erreur de chargement des catégories</p>";
     }
 }
 
