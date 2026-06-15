@@ -4,7 +4,7 @@
 *.lock
 *.ini
 !build/php.ini
-minipress.web/dist/index.js
+minipress.web/dist/
 
 # ---- Dépendances ----
 composer.lock
