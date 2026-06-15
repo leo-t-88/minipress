@@ -20,7 +20,7 @@ class GetHomeAction
 
                   $view = Twig::fromRequest($request);
 
-                  return $view->render($response, 'homeView.twig');
+                  return $view->render($response, 'home_view.twig');
             } catch (AuthnException $e) {
                   return $response->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor('signin'))->withStatus(302);
             }

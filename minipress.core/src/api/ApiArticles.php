@@ -32,7 +32,7 @@ class ApiArticles
                     ],
                     'links' => [
                         'self' => [
-                            'href' => $routeParser->urlFor("api_articles") . "/" . $a['id'] . '/'
+                            'href' => $routeParser->urlFor("api_article_id", ['id_a' => $a['id']])
                         ]
                     ],
                 ];

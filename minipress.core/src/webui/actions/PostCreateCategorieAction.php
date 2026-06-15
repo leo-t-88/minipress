@@ -7,8 +7,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 use Slim\Routing\RouteContext;
-use Slim\exception\HttpForbiddenException;
-use Slim\exception\HttpBadRequestException;
+use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpBadRequestException;
 
 use mp\webui\providers\CsrfTokenProvider;
 use mp\webui\providers\AuthnProvider;

@@ -6,9 +6,9 @@ namespace mp\webui\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
-use Slim\exception\HttpUnauthorizedException;
-use Slim\exception\HttpBadRequestException;
-use Slim\exception\HttpNotFoundException;
+use Slim\Exception\HttpUnauthorizedException;
+use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpNotFoundException;
 
 use mp\core\application\exceptions\AuthnException;
 use mp\core\application\exceptions\DataErrorException;

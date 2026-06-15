@@ -30,13 +30,13 @@ CREATE TABLE Article (
 
     CONSTRAINT fk_article_auteur
         FOREIGN KEY (auteur_id)
-        REFERENCES user(id)
+        REFERENCES User(id)
         ON DELETE RESTRICT
         ON UPDATE CASCADE,
 
     CONSTRAINT fk_article_categorie
         FOREIGN KEY (categorie_id)
-        REFERENCES categorie(id)
+        REFERENCES Categorie(id)
         ON DELETE RESTRICT
         ON UPDATE CASCADE
 );

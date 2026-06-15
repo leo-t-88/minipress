@@ -6,7 +6,7 @@ namespace mp\webui\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
-use Slim\exception\HttpUnauthorizedException;
+use Slim\Exception\HttpUnauthorizedException;
 
 use mp\core\application\exceptions\AuthnException;
 use mp\core\application\usecases\ArticleManaService;
