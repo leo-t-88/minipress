@@ -3,6 +3,21 @@ import { getArticles, getCategories } from "./api";
 import { renderArticles, renderCategories } from "./view";
 import { ArticleList } from "./types";
 
+let displayedArticles: any[] = [];
+
+function sortAndRenderArticles(order: "ASC" | "DESC"): void {
+    if (displayedArticles.length === 0) return;
+
+    displayedArticles.sort((a: any, b: any) => {
+        const timeA = new Date(a.article.date_creation).getTime();
+        const timeB = new Date(b.article.date_creation).getTime();
+        
+        return order === "DESC" ? timeB - timeA : timeA - timeB;
+    });
+
+    renderArticles(displayedArticles);
+}
+
 async function init(): Promise<void> {
     const zoneArticles = document.getElementById("articles");
     const zoneCategories = document.getElementById("categories-list");
@@ -10,13 +25,15 @@ async function init(): Promise<void> {
     try {
         const response: ArticleList = await getArticles();
 
-        const sortedArticles = response.articles.sort(
+        displayedArticles = response.articles;
+
+        displayedArticles.sort(
             (a: ArticleList["articles"][number], b: ArticleList["articles"][number]) =>
                 new Date(b.article.date_creation).getTime() -
                 new Date(a.article.date_creation).getTime()
         );
 
-        renderArticles(sortedArticles);
+        renderArticles(displayedArticles);
     } catch (error) {
         console.error(error);
         if (zoneArticles) zoneArticles.innerHTML = "<p>Erreur de chargement</p>";
@@ -29,6 +46,25 @@ async function init(): Promise<void> {
         console.error(error);
         if (zoneCategories) zoneCategories.innerHTML = "<p>Erreur de chargement des catégories</p>";
     }
-}
 
+const btnDesc = document.getElementById("btn-sort-desc");
+const btnAsc = document.getElementById("btn-sort-asc");
+
+    if (btnDesc && btnAsc) {
+        btnDesc.addEventListener("click", () => {
+            btnDesc.style.fontWeight = "bold";
+            btnAsc.style.fontWeight = "normal";
+            
+            sortAndRenderArticles("DESC");
+        });
+
+        btnAsc.addEventListener("click", () => {
+            btnAsc.style.fontWeight = "bold";
+            btnDesc.style.fontWeight = "normal";
+            
+            sortAndRenderArticles("ASC");
+        });
+    }
+}
+    
 init();
