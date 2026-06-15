@@ -15,6 +15,13 @@ $app = \Slim\Factory\AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
 $app->setBasePath('');
+$app->add(function ($request, $handler) {
+    $response = $handler->handle($request);
+
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST');
+});
 
 $user = null;
 

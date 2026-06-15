@@ -2,6 +2,8 @@ import { getArticles } from "./api";
 import { renderArticles } from "./view";
 
 async function init(): Promise<void> {
+    const zone = document.getElementById("articles");
+
     try {
         const response = await getArticles();
 
@@ -9,13 +11,10 @@ async function init(): Promise<void> {
             return new Date(b.article.date_creation).getTime() - new Date(a.article.date_creation).getTime();
         });
 
-        console.log(response);
-        console.log(response.articles);
-        console.log(response.articles.length);
-
         renderArticles(sortedArticles);
     } catch (error) {
         console.error(error);
+        if (zone) zone.innerHTML = "<p>Erreur de chargement</p>";
     }
 }
 
