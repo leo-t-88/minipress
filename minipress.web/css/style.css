@@ -3,7 +3,7 @@
     --background-color: #FFFDF7;
 }
 
-body { 
+body {
     font-family: Arial, sans-serif;
     margin: 0 10px;
 }
@@ -13,4 +13,14 @@ img {
     max-width: 100%;
     max-height: 80vh;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.categorie-item {
+    color: blue;
+    cursor: pointer;
+    margin-bottom: 4px;
+}
+
+.categorie-item:hover {
+    color: darkblue;
 }
