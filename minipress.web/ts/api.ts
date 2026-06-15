@@ -1,13 +1,14 @@
 import { API_BASE_URL } from "./config";
+import { ArticleList } from "./types";
 
-export async function getArticles() {
+export async function getArticles(): Promise<ArticleList> {
     const response = await fetch(`${API_BASE_URL}/articles`);
 
     if (!response.ok) {
         throw new Error("Erreur lors du chargement des articles");
     }
 
-    return response.json();
+    return response.json() as Promise<ArticleList>;
 }
 
 export async function getCategories() {

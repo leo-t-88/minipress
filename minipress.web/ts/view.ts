@@ -1,6 +1,7 @@
 import Handlebars from "handlebars";
+import { ArticleList } from "./types";
 
-export function renderArticles(articles: any[]): void {
+export function renderArticles(articles: ArticleList["articles"]): void {
     const zone = document.getElementById("articles");
     if (!zone) return;
 
