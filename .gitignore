@@ -11,7 +11,7 @@ minipress.core/src/vendor/
 
 package-lock.json
 minipress.web/node_modules/
-
+minipress.web/dist/index.js
 # ---- Cache et logs ----
 *.log
 *.cache
