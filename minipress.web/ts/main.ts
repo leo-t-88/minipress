@@ -79,7 +79,6 @@ async function chargerArticlesCategorie(id: string): Promise<void> {
         } else {
             response = await getArticlesByCategorie(id);
         }
-        
         displayedArticles = response.articles;
         displayedArticles.sort(
             (a: any, b: any) =>
