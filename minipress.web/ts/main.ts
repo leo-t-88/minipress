@@ -50,8 +50,7 @@ async function loadCategory(id: string) {
     if (zoneArticles) zoneArticles.innerHTML = "<p>Chargement...</p>";
 
     try {
-        const response =
-            id === "all" ? await getArticles() : await getArticlesByCategorie(id);
+        const response = id === "all" ? await getArticles() : await getArticlesByCategorie(id);
 
         displayedArticles = sortArticles(response.articles, "DESC");
         searchableArticles = await buildSearchable(displayedArticles);

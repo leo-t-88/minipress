@@ -1,11 +1,7 @@
-// filters.ts
 import { ArticleList } from "./types";
 import { getArticle } from "./api";
 
-export function sortArticles(
-    articles: ArticleList["articles"],
-    order: "ASC" | "DESC"
-) {
+export function sortArticles(articles: ArticleList["articles"], order: "ASC" | "DESC") {
     return [...articles].sort((a, b) => {
         const tA = new Date(a.article.date_creation).getTime();
         const tB = new Date(b.article.date_creation).getTime();
@@ -26,8 +22,7 @@ export async function buildSearchable(articles: ArticleList["articles"]) {
         articles.map(async (item) => {
             const full = await getArticle(item.links.self.href);
             return {
-                ...item,
-                resume: full.article.resume || ""
+                ...item, resume: full.article.resume || ""
             };
         })
     );
