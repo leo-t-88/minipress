@@ -32,5 +32,5 @@ button{
 #current_article { background-color: #ffffff; }
 #current_article .resume{ background-color: var(--background-color); }
 
-#articles article, .categorie-item{ cursor: pointer; }
-#articles article:hover, .categorie-item:hover { color: rgb(49, 90, 180); }
+#articles article h2, .categorie-item{ cursor: pointer; }
+#articles article h2:hover, .categorie-item:hover { color: rgb(49, 90, 180); }

@@ -5,7 +5,6 @@ import { ArticleList } from "./types";
 
 let displayedArticles: ArticleList["articles"] = [];
 
-
 function sortAndRenderArticles(order: "ASC" | "DESC"): void {
     if (displayedArticles.length === 0) return;
 

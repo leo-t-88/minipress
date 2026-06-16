@@ -9,9 +9,9 @@
 
     <input type="text" id="titre" name="titre" value="{{ old.titre ?? '' }}" placeholder="Titre" required>
     </br>
-    <textarea id="resume" name="resume" placeholder="Resumé">{{ old.resume ?? '' }}</textarea>
+    <textarea id="resume" name="resume" placeholder="Resumé (Markdown)">{{ old.resume ?? '' }}</textarea>
     </br>
-    <textarea id="contenu" name="contenu" placeholder="Contenu"  required>{{ old.contenu ?? '' }}</textarea>
+    <textarea id="contenu" name="contenu" placeholder="Contenu (Markdown)"  required>{{ old.contenu ?? '' }}</textarea>
     </br>
     <select id="categorie_id" name="categorie_id">
         <option value="">-- Choisir une catégorie --</option>

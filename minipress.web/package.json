@@ -7,8 +7,9 @@
   },
   "type": "module",
   "dependencies": {
-    "esbuild": "^0.27.2",
-    "marked": "^17.0.1",
-    "handlebars": "^4.7.8"
+    "esbuild": "^0.28.1",
+    "marked": "^18.0.5",
+    "handlebars": "^4.7.8",
+    "dompurify": "^3.4.10"
   }
 }
