@@ -12,20 +12,29 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("MiniPress"),
-      ),
-      body: Column(
-        children: [
-          InkWell(
+        bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(40),
+          child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
               context.read<ArticleProvider>().toggleSortOrder();
             },
-            child: Chip(
-              labelPadding: const EdgeInsets.symmetric(horizontal: 10),
-              avatar: Icon(provider.sortAscending ? Icons.arrow_upward : Icons.arrow_downward, size: 18,),
-              label: Text(provider.sortAscending ? "Ancien" : "Nouveau",),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Chip(
+                labelPadding: const EdgeInsets.symmetric(horizontal: 10),
+                avatar: Icon(
+                  provider.sortAscending ? Icons.arrow_upward : Icons.arrow_downward,
+                  size: 18,
+                ),
+                label: Text(provider.sortAscending ? "Ancien" : "Nouveau"),
+              ),
             ),
           ),
+        ),
+      ),
+      body: Column(
+        children: [
           Expanded(
             child : provider.isLoading ? const Center(child: CircularProgressIndicator()) : ListView.builder(
               itemCount: provider.articles.length,
