@@ -28,6 +28,16 @@ button{
     border-radius: 15px;
     padding: 7px;
 }
+*
+.auteur-link {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.auteur-link:hover {
+    color: darkblue;
+}
 
 #current_article { background-color: #ffffff; }
 #current_article .resume{ background-color: var(--background-color); }

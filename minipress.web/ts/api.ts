@@ -40,3 +40,13 @@ export async function getArticle(lien: string) {
 
     return response.json();
 }
+
+export async function getArticlesAuteur(id: string): Promise<ArticleList> {
+    const response = await fetch(`${API_BASE_URL}${API_PATH}/auteurs/${id}/articles`);
+
+    if (!response.ok) {
+        throw new Error("Erreur lors du chargement des articles de l'auteur");
+    }
+
+    return response.json() as Promise<ArticleList>;
+}

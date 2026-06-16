@@ -2,7 +2,7 @@ import { marked } from "marked";
 import DOMPurify from "dompurify";
 import Handlebars from "handlebars";
 
-import { getArticle } from "./api";
+import { getArticle, getArticlesAuteur } from "./api";
 import { Article, ArticleList, CategoryList } from "./types";
 
 export function renderArticles(articles: ArticleList["articles"]): void {
@@ -14,7 +14,7 @@ export function renderArticles(articles: ArticleList["articles"]): void {
             <article class="article-item">
                 <h2 data-href="{{links.self.href}}">{{article.titre}}</h2>
                 <p>Date : {{article.date_creation}}</p>
-                <p>Auteur : {{article.auteur_id}}</p>
+                <p>Auteur : <span class="auteur-link" data-auteur-id="{{article.auteur_id}}">{{article.auteur_id}}</span></p>
             </article>
         {{/each}}
     `;
@@ -28,6 +28,15 @@ export function renderArticles(articles: ArticleList["articles"]): void {
 
         item.addEventListener("click", () => {
             showArticle(href);
+        });
+    });
+
+    document.querySelectorAll(".auteur-link").forEach(span => {
+        span.addEventListener("click", async () => {
+            const auteurId = (span as HTMLElement).dataset.auteurId;
+            if (!auteurId) return;
+
+            await showArticlesAuteur(auteurId);
         });
     });
 }
@@ -87,4 +96,43 @@ export async function showArticle(href: string): Promise<void> {
     };
 
     zone.innerHTML = template(context);
+}
+
+export async function showArticlesAuteur(auteurId: string): Promise<void> {
+    const zone = document.getElementById("articles");
+    if (!zone) return;
+    try {
+        const data = await getArticlesAuteur(auteurId);
+        const articles = data.articles.sort(
+            (a, b) =>
+                new Date(b.article.date_creation).getTime() -
+                new Date(a.article.date_creation).getTime()
+        );
+
+        const source = `
+            {{#each articles}}
+                <article class="article-item">
+                    <h2 data-href="{{links.self.href}}">
+                        {{article.titre}}
+                    </h2>
+
+                    <p>Date : {{article.date_creation}}</p>
+
+                    <p>
+                        Auteur :
+                        <span 
+                            class="auteur-link" 
+                            data-auteur-id="{{article.auteur_id}}">
+                            {{article.auteur_id}}
+                        </span>
+                    </p>
+                </article>
+            {{/each}}
+        `;
+        const template = Handlebars.compile(source);
+        zone.innerHTML = template({ articles });
+    } catch (error) {
+        console.error(error);
+        zone.innerHTML = "<p>Erreur de chargement des articles</p>";
+    }
 }
