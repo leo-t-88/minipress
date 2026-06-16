@@ -72,7 +72,14 @@ async function chargerArticlesCategorie(id: string): Promise<void> {
     if (zoneArticles) zoneArticles.innerHTML = "<p>Chargement...</p>";
 
     try {
-        const response = await getArticlesByCategorie(id);
+        let response: ArticleList;
+
+        if (id==="all"){
+            response = await getArticles();
+        } else {
+            response = await getArticlesByCategorie(id);
+        }
+        
         displayedArticles = response.articles;
         displayedArticles.sort(
             (a: any, b: any) =>

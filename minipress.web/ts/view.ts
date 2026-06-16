@@ -38,6 +38,10 @@ export function renderCategories(categories: CategoryList["categories"]): void {
 
     const source = `
         <ul>
+            <li class="categorie-item" data-id="all">
+                Toutes les catégories
+            </li>
+
             {{#each categories}}
                 <li class="categorie-item" data-id="{{id}}">
                     {{nom}}
