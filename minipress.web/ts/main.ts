@@ -67,13 +67,15 @@ async function chargerArticlesCategorie(id: string): Promise<void> {
     try {
         const response = await getArticlesByCategorie(id);
 
-        const sortedArticles = response.articles.sort(
-            (a: any, b: any) =>
+        displayedArticles = response.articles;
+
+        displayedArticles.sort(
+            (a, b) =>
                 new Date(b.article.date_creation).getTime() -
                 new Date(a.article.date_creation).getTime()
         );
 
-        renderArticles(sortedArticles);
+        renderArticles(displayedArticles);
     } catch (error) {
         console.error(error);
         if (zoneArticles) zoneArticles.innerHTML = "<p>Erreur de chargement</p>";
