@@ -21,6 +21,13 @@ function sortAndRenderArticles(order: "ASC" | "DESC"): void {
 async function init(): Promise<void> {
     const zoneArticles = document.getElementById("articles");
     const zoneCategories = document.getElementById("categories-list");
+    const searchInput = document.getElementById("search-input") as HTMLInputElement | null;
+
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+            filterArticles(searchInput.value);
+        });
+    }
 
     try {
         const response: ArticleList = await getArticles();
@@ -68,9 +75,8 @@ async function chargerArticlesCategorie(id: string): Promise<void> {
         const response = await getArticlesByCategorie(id);
 
         displayedArticles = response.articles;
-
         displayedArticles.sort(
-            (a, b) =>
+            (a: any, b: any) =>
                 new Date(b.article.date_creation).getTime() -
                 new Date(a.article.date_creation).getTime()
         );
@@ -89,17 +95,24 @@ const btnAsc = document.getElementById("btn-sort-asc");
         btnDesc.addEventListener("click", () => {
             btnDesc.style.fontWeight = "bold";
             btnAsc.style.fontWeight = "normal";
-            
+
             sortAndRenderArticles("DESC");
         });
 
         btnAsc.addEventListener("click", () => {
             btnAsc.style.fontWeight = "bold";
             btnDesc.style.fontWeight = "normal";
-            
+
             sortAndRenderArticles("ASC");
         });
     }
 }
-    
+
+function filterArticles(search: string): void {
+    const filteredArticles = displayedArticles.filter((item) =>
+        item.article.titre.toLowerCase().includes(search.toLowerCase())
+    );
+
+    renderArticles(filteredArticles);
+}
 init();
