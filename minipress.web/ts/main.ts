@@ -1,5 +1,5 @@
 
-import { getArticles, getCategories, getArticlesByCategorie, getArticleByHref } from "./api";
+import { getArticles, getCategories, getArticlesByCategorie, getArticle } from "./api";
 import { renderArticles, renderCategories } from "./view";
 import { ArticleList } from "./types";
 
@@ -128,7 +128,7 @@ function filterArticles(search: string): void {
 async function buildSearchableArticles(): Promise<void> {
     searchableArticles = await Promise.all(
         displayedArticles.map(async (item) => {
-            const fullArticle = await getArticleByHref(item.links.self.href);
+            const fullArticle = await getArticle(item.links.self.href);
 
             return {
                 ...item,
