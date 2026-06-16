@@ -1,9 +1,10 @@
 
-import { getArticles, getCategories, getArticlesByCategorie } from "./api";
+import { getArticles, getCategories, getArticlesByCategorie, getArticleByHref } from "./api";
 import { renderArticles, renderCategories } from "./view";
 import { ArticleList } from "./types";
 
 let displayedArticles: ArticleList["articles"] = [];
+let searchableArticles: any[] = [];
 
 function sortAndRenderArticles(order: "ASC" | "DESC"): void {
     if (displayedArticles.length === 0) return;
@@ -39,7 +40,7 @@ async function init(): Promise<void> {
                 new Date(b.article.date_creation).getTime() -
                 new Date(a.article.date_creation).getTime()
         );
-
+        await buildSearchableArticles();
         renderArticles(displayedArticles);
     } catch (error) {
         console.error(error);
@@ -79,7 +80,7 @@ async function chargerArticlesCategorie(id: string): Promise<void> {
                 new Date(b.article.date_creation).getTime() -
                 new Date(a.article.date_creation).getTime()
         );
-
+        await buildSearchableArticles();
         renderArticles(displayedArticles);
     } catch (error) {
         console.error(error);
@@ -108,10 +109,26 @@ const btnAsc = document.getElementById("btn-sort-asc");
 }
 
 function filterArticles(search: string): void {
-    const filteredArticles = displayedArticles.filter((item) =>
-        item.article.titre.toLowerCase().includes(search.toLowerCase())
+    const value = search.toLowerCase();
+
+    const filteredArticles = searchableArticles.filter((item) =>
+        item.article.titre.toLowerCase().includes(value) ||
+        item.resume.toLowerCase().includes(value)
     );
 
     renderArticles(filteredArticles);
+}
+
+async function buildSearchableArticles(): Promise<void> {
+    searchableArticles = await Promise.all(
+        displayedArticles.map(async (item) => {
+            const fullArticle = await getArticleByHref(item.links.self.href);
+
+            return {
+                ...item,
+                resume: fullArticle.article.resume || ""
+            };
+        })
+    );
 }
 init();
