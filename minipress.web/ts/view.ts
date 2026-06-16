@@ -9,16 +9,7 @@ export function renderArticles(articles: ArticleList["articles"]): void {
     const zone = document.getElementById("articles");
     if (!zone) return;
 
-    const source = `
-        {{#each articles}}
-            <article class="article-item">
-                <h2 data-href="{{links.self.href}}">{{article.titre}}</h2>
-                <p>Date : {{article.date_creation}}</p>
-                <p>Auteur : {{article.auteur_id}}</p>
-            </article>
-        {{/each}}
-    `;
-
+    const source = (document.getElementById("tpl-articles") as HTMLScriptElement).innerHTML;
     const template = Handlebars.compile(source);
     zone.innerHTML = template({ articles });
 
@@ -36,16 +27,7 @@ export function renderCategories(categories: CategoryList["categories"]): void {
     const zone = document.getElementById("categories-list");
     if (!zone) return;
 
-    const source = `
-        <ul>
-            {{#each categories}}
-                <li class="categorie-item" data-id="{{id}}">
-                    {{nom}}
-                </li>
-            {{/each}}
-        </ul>
-    `;
-
+    const source = (document.getElementById("tpl-categories") as HTMLScriptElement).innerHTML;
     const template = Handlebars.compile(source);
     zone.innerHTML = template({ categories });
 }
@@ -59,24 +41,7 @@ export async function showArticle(href: string): Promise<void> {
 
     const md = (txt: string) => DOMPurify.sanitize(marked.parse(txt.replace(/\r\n/g, "\n"), { async: false }));
 
-    const source = `
-        <article class="full-article">
-            <h2>{{titre}}</h2>
-            <p><strong>Publié le :</strong> {{date_publication}}</p>
-
-            <div class="contenu">
-                {{{contenu_html}}}
-            </div>
-
-            {{#if resume_html}}
-            <div class="resume">
-                <h3>Résumé</h3>
-                {{{resume_html}}}
-            </div>
-            {{/if}}
-        </article>
-    `;
-
+    const source = (document.getElementById("tpl-full-article") as HTMLScriptElement).innerHTML;
     const template = Handlebars.compile(source);
 
     const context = {
