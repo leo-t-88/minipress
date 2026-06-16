@@ -45,12 +45,22 @@ input:focus {
     border-radius: 15px;
     padding: 7px;
 }
+*
+.auteur-link {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.auteur-link:hover {
+    color: darkblue;
+}
 
 #current_article { background-color: var(--bg-color); }
 #current_article .resume{ background-color: var(--bg-color-medium) }
 
-#articles article h2, .categorie-item{ cursor: pointer; }
-#articles article h2:hover, .categorie-item:hover { color: rgb(49, 90, 180); }
+#articles article h2, #articles article p[data-id], .categorie-item{ cursor: pointer; }
+#articles article h2:hover, #articles article p[data-id]:hover, .categorie-item:hover { color: rgb(49, 90, 180); }
 
 .active {
     font-weight: bold;

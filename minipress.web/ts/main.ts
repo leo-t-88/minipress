@@ -1,28 +1,12 @@
-import { getArticles, getCategories, getArticlesByCategorie } from "./api";
-import { renderArticles, renderCategories } from "./view";
+import { getArticle, getArticles, getCategories } from "./api";
+import { renderArticles, renderCategories, renderArticle } from "./view";
 import { sortArticles, filterArticles, buildSearchable } from "./filters";
 import { ArticleList } from "./types";
 
 let displayedArticles: ArticleList["articles"] = [];
 let searchableArticles: any[] = [];
 
-async function loadInitialArticles() {
-    const zoneArticles = document.getElementById("articles");
-
-    try {
-        const response: ArticleList = await getArticles();
-
-        displayedArticles = sortArticles(response.articles, "DESC");
-        searchableArticles = await buildSearchable(displayedArticles);
-
-        renderArticles(displayedArticles);
-    } catch (error) {
-        console.error(error);
-        if (zoneArticles) zoneArticles.innerHTML = "<p>Erreur de chargement</p>";
-    }
-}
-
-async function setupCategories() {
+async function loadCategories() {
     const zoneCategories = document.getElementById("categories-list");
 
     try {
@@ -37,28 +21,13 @@ async function setupCategories() {
             const id = item.dataset.id;
             if (!id) return;
 
-            await loadCategory(id);
+            const path = (id === "all") ? "articles" : `categories/${id}/articles`
+
+            await loadArticles(path);
         });
     } catch (error) {
         console.error(error);
         if (zoneCategories) zoneCategories.innerHTML = "<p>Erreur de chargement des catégories</p>";
-    }
-}
-
-async function loadCategory(id: string) {
-    const zoneArticles = document.getElementById("articles");
-    if (zoneArticles) zoneArticles.innerHTML = "<p>Chargement...</p>";
-
-    try {
-        const response = id === "all" ? await getArticles() : await getArticlesByCategorie(id);
-
-        displayedArticles = sortArticles(response.articles, "DESC");
-        searchableArticles = await buildSearchable(displayedArticles);
-
-        renderArticles(displayedArticles);
-    } catch (error) {
-        console.error(error);
-        if (zoneArticles) zoneArticles.innerHTML = "<p>Erreur de chargement</p>";
     }
 }
 
@@ -69,6 +38,7 @@ function setupSearch() {
     searchInput.addEventListener("input", () => {
         const filtered = filterArticles(searchableArticles, searchInput.value);
         renderArticles(filtered);
+        attachArticleListeners();
     });
 }
 
@@ -84,6 +54,7 @@ function setupSorting() {
 
         displayedArticles = sortArticles(displayedArticles, "DESC");
         renderArticles(displayedArticles);
+        attachArticleListeners();
     });
 
     btnAsc.addEventListener("click", () => {
@@ -92,14 +63,54 @@ function setupSorting() {
 
         displayedArticles = sortArticles(displayedArticles, "ASC");
         renderArticles(displayedArticles);
+        attachArticleListeners();
+    });
+}
+
+async function loadArticles(path: string) {
+    const zoneArticles = document.getElementById("articles");
+    if (zoneArticles) zoneArticles.innerHTML = "<p>Chargement...</p>";
+
+    try {
+        const response = await getArticles(path);
+
+        displayedArticles = sortArticles(response.articles, "DESC");
+        searchableArticles = await buildSearchable(displayedArticles);
+
+        renderArticles(displayedArticles);
+        attachArticleListeners();
+    } catch (error) {
+        console.error(error);
+        if (zoneArticles) zoneArticles.innerHTML = "<p>Erreur de chargement</p>";
+    }
+}
+
+function attachArticleListeners() {
+    document.querySelectorAll(".article-item h2").forEach(item => {
+        const href = item.getAttribute("data-href");
+        if (!href) return;
+
+        item.addEventListener("click", async () => {
+            const article = await getArticle(href);
+            renderArticle(article);
+        });
+    });
+
+    document.querySelectorAll(".article-item p[data-id]").forEach(item => {
+        const id = item.getAttribute("data-id");
+        if (!id) return;
+
+        item.addEventListener("click", async () => {
+            await loadArticles(`auteurs/${id}/articles`);
+        });
     });
 }
 
 async function init() {
     setupSearch();
     setupSorting();
-    setupCategories();
-    await loadInitialArticles();
+    loadCategories();
+    await loadArticles("articles");
 }
 
 init();

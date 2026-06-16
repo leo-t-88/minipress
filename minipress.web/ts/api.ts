@@ -1,18 +1,9 @@
 import { API_BASE_URL, API_PATH } from "./config";
 import { ArticleList, CategoryList } from "./types";
 
-export async function getArticles(): Promise<ArticleList> {
-    const response = await fetch(`${API_BASE_URL}${API_PATH}/articles`);
-
-    if (!response.ok) {
-        throw new Error("Erreur lors du chargement des articles");
-    }
-
-    return response.json() as Promise<ArticleList>;
-}
-
-export async function getArticlesByCategorie(id: string): Promise<ArticleList> {
-    const response = await fetch(`${API_BASE_URL}${API_PATH}/categories/${id}/articles`);
+export async function getArticles(path: string): Promise<ArticleList> {
+    console.log(`${API_BASE_URL}${API_PATH}${path}`);
+    const response = await fetch(`${API_BASE_URL}${API_PATH}${path}`);
 
     if (!response.ok) {
         throw new Error("Erreur lors du chargement des articles");
@@ -22,7 +13,7 @@ export async function getArticlesByCategorie(id: string): Promise<ArticleList> {
 }
 
 export async function getCategories(): Promise<CategoryList> {
-    const response = await fetch(`${API_BASE_URL}${API_PATH}/categories`);
+    const response = await fetch(`${API_BASE_URL}${API_PATH}categories`);
 
     if (!response.ok) {
         throw new Error("Erreur lors du chargement des catégories");
