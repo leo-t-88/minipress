@@ -40,3 +40,13 @@ export async function getArticle(lien: string) {
 
     return response.json();
 }
+
+export async function getArticleByHref(href: string): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}${href}`);
+
+    if (!response.ok) {
+        throw new Error("Erreur chargement article");
+    }
+
+    return await response.json();
+}
