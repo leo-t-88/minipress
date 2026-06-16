@@ -1,12 +1,13 @@
 /* GLOBAL */
 :root {
-    --background-color: #efefef;
+    --bg-color: #ffffff;
+    --bg-color-medium: #efefef;
 }
 
 body {
     font-family: Arial, sans-serif;
     margin: 5px 10px;
-    background-color: var(--background-color);
+    background-color: var(--bg-color-medium);
 }
 
 img {
@@ -29,7 +30,7 @@ input {
     margin: 5px 0;
     border-radius: 12px;
     border: 1px solid #333333;
-    background-color: transparent;
+    background-color: var(--bg-color);
     font-size: 1rem;
 }
 
@@ -45,8 +46,13 @@ input:focus {
     padding: 7px;
 }
 
-#current_article { background-color: #ffffff; }
-#current_article .resume{ background-color: var(--background-color); }
+#current_article { background-color: var(--bg-color); }
+#current_article .resume{ background-color: var(--bg-color-medium) }
 
 #articles article h2, .categorie-item{ cursor: pointer; }
 #articles article h2:hover, .categorie-item:hover { color: rgb(49, 90, 180); }
+
+.active {
+    font-weight: bold;
+    background-color: var(--bg-color);
+}

@@ -51,7 +51,7 @@ $twig = Twig::create(__DIR__ . '/../webui/views', [
 ]);
 
 $twig->getEnvironment()->addGlobal('css_path', $app->getBasePath() . '/css');
-$twig->getEnvironment()->addGlobal('version', ['mp' => '0.0.1', 'php' => PHP_VERSION]);
+$twig->getEnvironment()->addGlobal('version', ['mp' => '1.0.0', 'php' => PHP_VERSION]);
 $twig->getEnvironment()->addGlobal('user', $user);
 $twig->getEnvironment()->addGlobal('menu', [
     ['label' => 'Accueil', 'route' => 'home'],
