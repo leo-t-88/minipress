@@ -64,7 +64,7 @@ class ArticleManaService implements ArticleManaInterface
 
       public function getArticles(?int $categorie_id = null, bool $onlyPubli = true) : array{
             try {
-                  $articles = Article::orderBy('date_creation', 'DESC');
+                  $articles = Article::with('auteur')->orderBy('date_creation', 'DESC');
 
                   if ($categorie_id !== null) $articles->where('categorie_id', $categorie_id);
 

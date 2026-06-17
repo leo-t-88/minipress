@@ -46,7 +46,7 @@ input:focus, textarea:focus, select:focus {
 
 textarea{ resize: none; }
 
-p {  margin: 5px; }
+p, span {  margin: 5px; }
 
 #contenu{ min-height: 300px; }
 

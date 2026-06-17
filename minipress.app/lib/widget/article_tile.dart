@@ -72,12 +72,8 @@ class ArticleTile extends StatelessWidget {
                       child: Text(
                         "Auteur : ${article.author}",
                         style: TextStyle(
-                          color: enableAuthorNavigation
-                              ? const Color.fromARGB(255, 184, 249, 72)
-                              : Colors.grey,
-                          decoration: enableAuthorNavigation
-                              ? TextDecoration.underline
-                              : TextDecoration.none,
+                          color: const Color.fromARGB(255, 130, 162, 75),
+                          decoration: enableAuthorNavigation ? TextDecoration.underline : TextDecoration.none,
                         ),
                       ),
                     ),

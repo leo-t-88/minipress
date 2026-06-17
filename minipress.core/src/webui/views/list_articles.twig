@@ -23,7 +23,7 @@
             {% for article in articles %}
                 <li>
                     <strong>{{ article.titre }}</strong> 
-                    <span>(Créé le : {{ article.date_creation }})</span>
+                    <span>(Créé le : {{ article.date_creation }} par {{ article.auteur.nom }})</span>
                     {% if article.can_toggle %}
                     <form action="{{ url_for('article_toggle_publish', { id: article.id }) }}" method="post">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
