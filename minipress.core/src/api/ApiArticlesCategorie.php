@@ -14,8 +14,8 @@ class ApiArticlesCategorie {
     public function __invoke(Request $request, Response $response, array $args): Response {
         try {
             $id = (int) $args['id_categ'];
-            $articles = (new ArticleManaService())->getArticleByCategorie($id);
             $routeParser = RouteContext::fromRequest($request)->getRouteParser();
+            $articles = (new ArticleManaService())->getArticles($id);
 
             $data = [
                 'type' => 'collection',

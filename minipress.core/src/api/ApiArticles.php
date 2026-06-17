@@ -12,10 +12,15 @@ use Slim\Routing\RouteContext;
 
 class ApiArticles
 {
-    public function __invoke(Request $request, Response $response, array $args): Response {
-        try {    
-            $articles = (new ArticleManaService())->getArticles();
+    public function __invoke(Request $request, Response $response, array $args): Response
+    {
+        try {
             $routeParser = RouteContext::fromRequest($request)->getRouteParser();
+
+            $queryParams = $request->getQueryParams();
+            $sort = $queryParams['sort'] ?? null;
+
+            $articles = (new ArticleManaService())->getArticles(null, $sort);
 
             $data = [
                 'type' => 'collection',

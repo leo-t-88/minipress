@@ -62,13 +62,20 @@ class ArticleManaService implements ArticleManaInterface
             }
       }
 
-      public function getArticles(?int $categorie_id = null, bool $onlyPubli = true) : array{
+      public function getArticles(?int $categorie_id = null, ?string $sort = null, bool $onlyPubli = true) : array{
             try {
-                  $articles = Article::with('auteur')->orderBy('date_creation', 'DESC');
+                  $articles = Article::with('auteur');
 
                   if ($categorie_id !== null) $articles->where('categorie_id', $categorie_id);
 
                   if ($onlyPubli) $articles->whereNotNull('date_publication');
+
+                  $articles = match ($sort) {
+                        'date-asc' => $articles->orderBy('date_publication', 'ASC'),
+                        'date-desc' => $articles->orderBy('date_publication', 'DESC'),
+                        'auteur' => $articles->orderBy('auteur_id', 'ASC'),
+                        default => $articles->orderBy('date_creation', 'DESC'),
+                  };
 
                   return $articles->get()->toArray();
             } catch (ModelNotFoundException $e) {
@@ -76,14 +83,6 @@ class ArticleManaService implements ArticleManaInterface
             } catch (Exception $e) {
                   throw new DataErrorException("Erreur lors de la validation de l'article");
             }
-      }
-
-      public function getArticleByCategorie(int $id, bool $onlyPubli = true): array {
-            $articles = Article::where('categorie_id', $id);
-
-            if ($onlyPubli) $articles->whereNotNull('date_publication');
-
-            return $articles->get()->toArray();
       }
 
       public function getArticleByAuteur(int $id, bool $onlyPubli = true): array {

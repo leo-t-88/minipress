@@ -14,7 +14,7 @@ class ApiArticleId
         $article = (new ArticleManaService())->getArticle($id);
 
         $data = [
-            "type" => "resource",
+            "type" => "ressource",
             "article" => $article,
         ];
 
