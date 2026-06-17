@@ -3,12 +3,13 @@
 - Loïc DURAND
 - Johan SCHAEFFER
 - Léo THOMAS
+
 S4DWM1
 
 ### Ressources
-Dépot Git : https://github.com/leo-t-88/minipress
-URL Docketu (Panel) : http://docketu.iutnc.univ-lorraine.fr:16797/
-URL Docketu (User) : http://docketu.iutnc.univ-lorraine.fr:16798/
+- Dépot Git : https://github.com/leo-t-88/minipress
+- URL Docketu (Panel) : http://docketu.iutnc.univ-lorraine.fr:16797/
+- URL Docketu (User) : http://docketu.iutnc.univ-lorraine.fr:16798/
 
 ### Installation
 - Copiez coller le fichier ``.env.dist`` en ``.env`` et remplir le fichier
