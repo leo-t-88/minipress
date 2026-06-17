@@ -11,10 +11,13 @@ dependencies:
     sdk: flutter
 
   # HTTP
-  dio: ^5.7.0
+  dio: ^5.9.2
 
   # Gestion d'état
-  provider: ^6.1.2
+  provider: ^6.1.5
+
+  # Markdown
+  flutter_markdown: ^0.7.7
 
 dev_dependencies:
   flutter_test:

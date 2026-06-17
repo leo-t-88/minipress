@@ -1,25 +1,21 @@
 class Article {
-  final int id;
+  final int? id;
   final String title;
   final String author;
   final DateTime createdAt;
-  final String? summary;
+  final DateTime? publishedAt;
+  final String? resume;
+  final String? content;
+  final String? apiUrl;
 
   Article({
-    required this.id,
+    this.id,
     required this.title,
     required this.author,
     required this.createdAt,
-    this.summary,
+    this.publishedAt,
+    this.resume,
+    this.content,
+    this.apiUrl,
   });
-
-  factory Article.fromJson(Map<String, dynamic> json) {
-    return Article(
-      id: json["id"],
-      title: json["titre"],
-      author: json["auteur"],
-      createdAt: DateTime.parse(json["date_creation"]),
-      summary: json["resume"],
-    );
-  }
 }

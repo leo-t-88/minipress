@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart' hide Category;
 import '../models/article.dart';
 import '../models/category.dart';
-import '../services/article_service.dart';
+import '../services/api_service.dart';
 
 class ArticleProvider extends ChangeNotifier {
-  final ArticleService _service = ArticleService();
+  final ApiService _service = ApiService();
 
   final List<Article> _articles = [];
   final List<Category> _categories = [];
@@ -23,11 +23,8 @@ List<Category> get categories => _categories;
   ArticleProvider() {
     loadArticles();
   }
-
-Future<void> loadArticles() async {
-    _isLoading = true;
-    notifyListeners();
-
+  
+  Future<void> loadArticles() async {
     try {
       final fetched = await _service.fetchArticles();
       final fetchedCategories = await _service.fetchCategories();
@@ -66,22 +63,20 @@ Future<void> loadArticles() async {
     notifyListeners();
   }
 
-void setSearchQuery(String query) {
+  void setSearchQuery(String query) {
     _searchQuery = query.toLowerCase().trim();
     notifyListeners();
   }
 
-List<Article> get articles {
+  List<Article> get articles {
     List<Article> filtered = _articles;
     
     if (_searchQuery.isNotEmpty) {
       filtered = _articles.where((article) {
         final matchTitle = article.title.toLowerCase().contains(_searchQuery);
+        final matchResume = article.resume != null && article.resume!.toLowerCase().contains(_searchQuery);
         
-        final matchSummary = article.summary != null && 
-                             article.summary!.toLowerCase().contains(_searchQuery);
-        
-        return matchTitle || matchSummary;
+        return matchTitle || matchResume;
       }).toList();
     }
 
