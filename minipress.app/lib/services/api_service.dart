@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import '../models/article.dart';
 import '../models/category.dart';
 
-class ArticleService {
+class ApiService {
   final Dio _dio = Dio();
   final String baseUrl = "http://docketu.iutnc.univ-lorraine.fr:16797";
 
@@ -28,7 +28,8 @@ class ArticleService {
         title: a["titre"] ?? "",
         author: a["auteur_id"].toString(),
         createdAt: DateTime.parse(a["date_creation"]),
-        summary: resumeComplet,
+        resume: resumeComplet,
+        apiUrl: json["links"]["self"]["href"],
       );
     }).toList());
 
@@ -50,10 +51,10 @@ class ArticleService {
       final a = json["article"];
       final String detailHref = json["links"]["self"]["href"];
 
-      String? resumeComplet;
+      String? resume;
       try {
         final detailResponse = await _dio.get("$baseUrl$detailHref");
-        resumeComplet = detailResponse.data["article"]["resume"];
+        resume = detailResponse.data["article"]["resume"];
       } catch (_) {}
 
       return Article(
@@ -61,10 +62,27 @@ class ArticleService {
         title: a["titre"] ?? "",
         author: a["auteur_id"].toString(),
         createdAt: DateTime.parse(a["date_creation"]),
-        summary: resumeComplet,
+        resume: resume,
+        apiUrl: json["links"]["self"]["href"],
       );
     }).toList());
 
     return await futureArticles;
+  }
+
+  Future<Article> fetchArticleById(String url) async {
+    final response = await _dio.get(baseUrl + url);
+
+    final a = response.data["article"];
+
+    return Article(
+      id: a["id"],
+      title: a["titre"],
+      author: a["auteur_id"].toString(),
+      createdAt: DateTime.parse(a["date_creation"]),
+      publishedAt: DateTime.parse(a["date_publication"]),
+      resume: a["resume"],
+      content: a["contenu"],
+    );
   }
 }

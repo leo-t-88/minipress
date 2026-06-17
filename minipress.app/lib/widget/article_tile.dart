@@ -10,40 +10,44 @@ class ArticleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.all(7),
       elevation: 0,
       color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: InkWell(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleDetailScreen(article: article)),),
-        child: Row(
-          children: [
-            Container(
-              width: 5,
-              height: 60,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: const BorderRadius.all(Radius.circular(4)),
-              ),
-            ),
-
-            Expanded(
-              child: ListTile(
-                title: Text(article.title, style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary,),),
-                subtitle: Column(
+        borderRadius: BorderRadius.circular(10),
+        highlightColor: Colors.transparent,
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleDetailScreen(article: article),),),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(article.title, style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary,),),
+                    const SizedBox(height: 4),
                     Text("Créé le : ${article.createdAt}"),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
+                        // To do : Articles de l'auteur
                       },
-                      child: Text("Auteur : ${article.author}",),
+                      child: Text("Auteur : ${article.author}"),
                     ),
                   ],
                 ),
-                trailing: const Icon(Icons.chevron_right),
               ),
-            ),
-          ],
+              const Icon(Icons.chevron_right),
+            ],
+          ),
         ),
       ),
     );

@@ -14,9 +14,9 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("MiniPress"),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(115),
+          preferredSize: const Size.fromHeight(90),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4.0),
             child: Column(
               children: [
                 Row(
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                         context.read<ArticleProvider>().toggleSortOrder();
                       },
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
@@ -54,24 +54,34 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 8),
                 SizedBox(
                   height: 40,
-                  child: provider.isLoading
-                      ? const SizedBox()
-                      : ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: provider.categories.length,
-                          itemBuilder: (context, index) {
-                            final category = provider.categories[index];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4),
-                              child: ActionChip(
-                                label: Text(category.nom),
-                                onPressed: () {
-                                  context.read<ArticleProvider>().loadArticlesByCategory(category.id);
-                                },
-                              ),
-                            );
+                  child: provider.isLoading ? const Center(child: CircularProgressIndicator()) : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: provider.categories.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: ActionChip(
+                            label: const Text("Toutes"),
+                            onPressed: () {
+                              context.read<ArticleProvider>().loadArticles();
+                            },
+                          ),
+                        );
+                      }
+
+                      final category = provider.categories[index - 1];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: ActionChip(
+                          label: Text(category.nom),
+                          onPressed: () {
+                            context.read<ArticleProvider>().loadArticlesByCategory(category.id);
                           },
                         ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -81,16 +91,13 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: provider.isLoading
-                ? const Center(child: CircularProgressIndicator()): provider.articles.isEmpty
-                    ? const Center(child: Text("Aucun article ne correspond."))
-                    : ListView.builder(
-                        itemCount: provider.articles.length,
-                        itemBuilder: (context, index) {
-                          final article = provider.articles[index];
-                          return ArticleTile(article: article);
-                        },
-                      ),
+            child: provider.isLoading ? const Center(child: CircularProgressIndicator()) : provider.articles.isEmpty ? const Center(child: Text("Aucun article ne correspond.")) : ListView.builder(
+              itemCount: provider.articles.length,
+              itemBuilder: (context, index) {
+                final article = provider.articles[index];
+                return ArticleTile(article: article);
+              },
+            ),
           ),
         ],
       ),
