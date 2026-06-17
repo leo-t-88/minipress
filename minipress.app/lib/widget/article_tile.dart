@@ -35,7 +35,6 @@ class ArticleTile extends StatelessWidget {
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
-                        //To do Fonctionnalité 5 : Articles de l'auteur
                       },
                       child: Text("Auteur : ${article.author}",),
                     ),

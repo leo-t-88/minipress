@@ -19,7 +19,6 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
             child: Column(
               children: [
-                // Filtre Nouveau/Ancien à gauche et barre de recherche à droite
                 Row(
                   children: [
                     ActionChip(
@@ -33,7 +32,6 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(width: 12),
-                    // Expanded force le champ de recherche à occuper tout l'espace disponible restant à droite
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
@@ -54,7 +52,6 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                // Affichage horizontal de la liste des catégories (F2)
                 SizedBox(
                   height: 40,
                   child: provider.isLoading
