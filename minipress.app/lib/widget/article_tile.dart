@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import '../models/article.dart';
 import '../screens/article_detail_screen.dart';
+import '../screens/auteur_articles_screen.dart';
 
 class ArticleTile extends StatelessWidget {
   final Article article;
+  final bool enableAuthorNavigation;
 
-  const ArticleTile({super.key, required this.article});
+  const ArticleTile({
+    super.key,
+    required this.article,
+    this.enableAuthorNavigation = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +19,12 @@ class ArticleTile extends StatelessWidget {
       elevation: 0,
       color: Colors.transparent,
       child: InkWell(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleDetailScreen(article: article)),),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ArticleDetailScreen(article: article),
+          ),
+        ),
         child: Row(
           children: [
             Container(
@@ -27,17 +38,32 @@ class ArticleTile extends StatelessWidget {
 
             Expanded(
               child: ListTile(
-                title: Text(article.title, style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary,),),
+                title: Text(
+                  article.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Créé le : ${article.createdAt}"),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        //To do Fonctionnalité 5 : Articles de l'auteur
-                      },
-                      child: Text("Auteur : ${article.author}",),
+                      onTap: enableAuthorNavigation
+                          ? () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AuteurArticlesScreen(
+                                    author: article.author,
+                                  ),
+                                ),
+                              );
+                            }
+                          : null,
+                      child: Text("Auteur : ${article.author}", style: TextStyle(color: const Color.fromARGB(255, 184, 249, 72))),
                     ),
                   ],
                 ),

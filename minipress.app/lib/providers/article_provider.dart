@@ -43,4 +43,8 @@ class ArticleProvider extends ChangeNotifier {
 
     return _sortAscending ? sorted : sorted.reversed.toList();
   }
+
+  List<Article> getArticlesByAuthor(String author) {
+    return articles.where((article) => article.author == author).toList();
+  }
 }
