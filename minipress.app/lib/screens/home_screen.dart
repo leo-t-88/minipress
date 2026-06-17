@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(90),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4.0),
             child: Column(
               children: [
                 Row(

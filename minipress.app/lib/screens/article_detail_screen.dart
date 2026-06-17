@@ -49,11 +49,6 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
             Text(fullArticle!.title, style: Theme.of(context).textTheme.headlineSmall,),
             const SizedBox(height: 8),
             Text("Publié le : ${fullArticle!.publishedAt}"),
-            
-            if (fullArticle!.resume != null) ...[
-              const SizedBox(height: 16),
-              Text(fullArticle!.resume!, style: Theme.of(context).textTheme.bodyMedium,),
-            ],
 
             const SizedBox(height: 20),
 
@@ -62,6 +57,27 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
               selectable: true,
               styleSheet: MarkdownStyleSheet(
                 p: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+
+            if (fullArticle!.resume != null) Container(
+              padding: const EdgeInsets.all(7),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Résumé"),
+                  MarkdownBody(
+                    data: fullArticle!.resume!,
+                    selectable: true,
+                    styleSheet: MarkdownStyleSheet(
+                      p: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
