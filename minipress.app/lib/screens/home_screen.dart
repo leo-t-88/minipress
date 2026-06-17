@@ -14,58 +14,89 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("MiniPress"),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(100),
-          child: Column(
-            children: [
-              ActionChip(
-                label: Text(provider.sortAscending ? "Ancien" : "Nouveau"),
-                avatar: Icon(
-                  provider.sortAscending
-                      ? Icons.arrow_upward
-                      : Icons.arrow_downward,
-                  size: 16,
-                ),
-                onPressed: () {
-                  context.read<ArticleProvider>().toggleSortOrder();
-                },
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 50,
-                child: provider.isLoading
-                    ? const SizedBox()
-                    : ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: provider.categories.length,
-                        itemBuilder: (context, index) {
-                          final category = provider.categories[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: ActionChip(
-                              label: Text(category.nom),
-                              onPressed: () {
-                                context
-                                    .read<ArticleProvider>()
-                                    .loadArticlesByCategory(category.id);
-                              },
-                            ),
-                          );
+          preferredSize: const Size.fromHeight(115),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            child: Column(
+              children: [
+                // Filtre Nouveau/Ancien à gauche et barre de recherche à droite
+                Row(
+                  children: [
+                    ActionChip(
+                      label: Text(provider.sortAscending ? "Ancien" : "Nouveau"),
+                      avatar: Icon(
+                        provider.sortAscending ? Icons.arrow_upward : Icons.arrow_downward,
+                        size: 16,
+                      ),
+                      onPressed: () {
+                        context.read<ArticleProvider>().toggleSortOrder();
+                      },
+                    ),
+                    const SizedBox(width: 12),
+                    // Expanded force le champ de recherche à occuper tout l'espace disponible restant à droite
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Rechercher",
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                        ),
+                        onChanged: (value) {
+                          context.read<ArticleProvider>().setSearchQuery(value);
                         },
                       ),
-              ),
-            ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                // Affichage horizontal de la liste des catégories (F2)
+                SizedBox(
+                  height: 40,
+                  child: provider.isLoading
+                      ? const SizedBox()
+                      : ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: provider.categories.length,
+                          itemBuilder: (context, index) {
+                            final category = provider.categories[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                              child: ActionChip(
+                                label: Text(category.nom),
+                                onPressed: () {
+                                  context.read<ArticleProvider>().loadArticlesByCategory(category.id);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-      body: provider.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: provider.articles.length,
-              itemBuilder: (context, index) {
-                final article = provider.articles[index];
-                return ArticleTile(article: article);
-              },
-            ),
+      body: Column(
+        children: [
+          Expanded(
+            child: provider.isLoading
+                ? const Center(child: CircularProgressIndicator()): provider.articles.isEmpty
+                    ? const Center(child: Text("Aucun article ne correspond."))
+                    : ListView.builder(
+                        itemCount: provider.articles.length,
+                        itemBuilder: (context, index) {
+                          final article = provider.articles[index];
+                          return ArticleTile(article: article);
+                        },
+                      ),
+          ),
+        ],
+      ),
     );
   }
 }
