@@ -13,6 +13,9 @@ class ArticleProvider extends ChangeNotifier {
   bool _sortAscending = false;
   bool get sortAscending => _sortAscending;
 
+  String _searchQuery = "";
+  String get searchQuery => _searchQuery;
+
   ArticleProvider() {
     loadArticles();
   }
@@ -35,10 +38,27 @@ class ArticleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Liste triée uniquement par date
-  List<Article> get articles {
-    final sorted = [..._articles];
+  void setSearchQuery(String query) {
+    _searchQuery = query.toLowerCase().trim();
+    notifyListeners();
+  }
 
+  /// Liste triée uniquement par date
+List<Article> get articles {
+    List<Article> filtered = _articles;
+    
+    if (_searchQuery.isNotEmpty) {
+      filtered = _articles.where((article) {
+        final matchTitle = article.title.toLowerCase().contains(_searchQuery);
+        
+        final matchSummary = article.summary != null && 
+                             article.summary!.toLowerCase().contains(_searchQuery);
+        
+        return matchTitle || matchSummary;
+      }).toList();
+    }
+
+    final sorted = [...filtered];
     sorted.sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
     return _sortAscending ? sorted : sorted.reversed.toList();

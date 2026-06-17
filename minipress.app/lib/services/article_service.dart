@@ -10,14 +10,26 @@ class ArticleService {
 
     final List rawList = response.data["articles"];
 
-    return rawList.map((json) {
+    final Future<List<Article>> futureArticles = Future.wait(rawList.map((json) async {
       final a = json["article"];
+      final String detailHref = json["links"]["self"]["href"];
+
+      String? resumeComplet;
+
+      try{
+        final detailResponse = await _dio.get("$baseUrl$detailHref");
+        resumeComplet = detailResponse.data["article"]["resume"];
+      } catch (e) {
+        print("Impossible de charger le résumé pour l'article ${a["titre"]}: $e");
+      }
       return Article(
-        id: json["links"]["self"]["href"].hashCode,
-        title: a["titre"],
+        id: detailHref.hashCode,
+        title: a["titre"] ?? "",
         author: a["auteur_id"].toString(),
         createdAt: DateTime.parse(a["date_creation"]),
+        summary: resumeComplet, // Le résumé est maintenant bien présent en mémoire !
       );
-    }).toList();
-  }
+    }).toList());
+    return await futureArticles;
+    }
 }
