@@ -14,7 +14,7 @@
     "ts/config.ts",
     "ts/types.ts",
     "ts/api.ts",
-    "ts/filter.ts",
-    "ts/views.ts"
+    "ts/filters.ts",
+    "ts/view.ts"
   ]
 }
