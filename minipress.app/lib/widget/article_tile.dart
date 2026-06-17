@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import '../models/article.dart';
 import '../screens/article_detail_screen.dart';
+import '../screens/auteur_articles_screen.dart';
 
 class ArticleTile extends StatelessWidget {
   final Article article;
+  final bool enableAuthorNavigation;
 
-  const ArticleTile({super.key, required this.article});
+  const ArticleTile({
+    super.key,
+    required this.article,
+    this.enableAuthorNavigation = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +19,16 @@ class ArticleTile extends StatelessWidget {
       margin: const EdgeInsets.all(7),
       elevation: 0,
       color: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         highlightColor: Colors.transparent,
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleDetailScreen(article: article),),),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ArticleDetailScreen(article: article),
+          ),
+        ),
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
@@ -32,19 +41,50 @@ class ArticleTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(article.title, style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary,),),
+                    Text(
+                      article.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+
                     const SizedBox(height: 4),
+
                     Text("Créé le : ${article.createdAt}"),
+
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        // To do : Articles de l'auteur
-                      },
-                      child: Text("Auteur : ${article.author}"),
+
+                      onTap: enableAuthorNavigation
+                          ? () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AuteurArticlesScreen(
+                                    author: article.author,
+                                  ),
+                                ),
+                              );
+                            }
+                          : null,
+
+                      child: Text(
+                        "Auteur : ${article.author}",
+                        style: TextStyle(
+                          color: enableAuthorNavigation
+                              ? const Color.fromARGB(255, 184, 249, 72)
+                              : Colors.grey,
+                          decoration: enableAuthorNavigation
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
+
               const Icon(Icons.chevron_right),
             ],
           ),

@@ -15,7 +15,7 @@ class ArticleProvider extends ChangeNotifier {
   bool _sortAscending = false;
   bool get sortAscending => _sortAscending;
 
-List<Category> get categories => _categories;
+  List<Category> get categories => _categories;
 
   String _searchQuery = "";
   String get searchQuery => _searchQuery;
@@ -23,7 +23,7 @@ List<Category> get categories => _categories;
   ArticleProvider() {
     loadArticles();
   }
-  
+
   Future<void> loadArticles() async {
     try {
       final fetched = await _service.fetchArticles();
@@ -70,12 +70,14 @@ List<Category> get categories => _categories;
 
   List<Article> get articles {
     List<Article> filtered = _articles;
-    
+
     if (_searchQuery.isNotEmpty) {
       filtered = _articles.where((article) {
         final matchTitle = article.title.toLowerCase().contains(_searchQuery);
-        final matchResume = article.resume != null && article.resume!.toLowerCase().contains(_searchQuery);
-        
+        final matchResume =
+            article.resume != null &&
+            article.resume!.toLowerCase().contains(_searchQuery);
+
         return matchTitle || matchResume;
       }).toList();
     }
@@ -84,5 +86,9 @@ List<Category> get categories => _categories;
     sorted.sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
     return _sortAscending ? sorted : sorted.reversed.toList();
+  }
+
+  List<Article> getArticlesByAuthor(String author) {
+    return articles.where((article) => article.author == author).toList();
   }
 }
