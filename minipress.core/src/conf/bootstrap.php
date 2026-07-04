@@ -13,11 +13,12 @@ Eloquent::init(__DIR__ . '/minipress.db.conf.ini');
 
 $app = \Slim\Factory\AppFactory::create();
 $app->addRoutingMiddleware();
-$app->addErrorMiddleware(true, false, false);
+$app->addErrorMiddleware(false, false, false);
 $app->setBasePath('');
 $app->add(function ($request, $handler) {
     $response = $handler->handle($request);
 
+    // Enable CORS headers for GET and POST
     return $response
         ->withHeader('Access-Control-Allow-Origin', '*')
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST');

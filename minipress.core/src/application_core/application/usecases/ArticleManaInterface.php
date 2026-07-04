@@ -13,5 +13,7 @@ interface ArticleManaInterface {
     public function getArticles(?int $categorie_id = null, ?string $sort = null, bool $onlyPubli = true) : array;
 
     public function getArticleByAuteur(int $idd, bool $onlyPubli = true): array;
+
+    public static function sanitizeMarkdown(string $md): string;
 }
 

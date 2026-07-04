@@ -5,21 +5,29 @@ namespace mp\api;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+
+use \Slim\Exception\HttpNotFoundException;
+
 use mp\core\application\usecases\ArticleManaService;
+use mp\core\application\exceptions\NotFoundException;
 
 class ApiArticleId
 {
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $id = (int) $args['id_a'];
-        $article = (new ArticleManaService())->getArticle($id);
+        try {
+            $id = (int) $args['id_a'];
+            $article = (new ArticleManaService())->getArticle($id);
 
-        $data = [
-            "type" => "ressource",
-            "article" => $article,
-        ];
+            $data = [
+                "type" => "ressource",
+                "article" => $article,
+            ];
 
-        $response->getBody()->write(json_encode($data));
+            $response->getBody()->write(json_encode($data));
 
-        return $response->withHeader("Content-Type", "application/json");
+            return $response->withHeader("Content-Type", "application/json");
+        } catch (NotFoundException $e) {
+            throw new HttpNotFoundException($request, $e->getMessage());
+        }
     }
 }

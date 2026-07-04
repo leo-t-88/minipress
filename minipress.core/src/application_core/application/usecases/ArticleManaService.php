@@ -92,4 +92,14 @@ class ArticleManaService implements ArticleManaInterface
 
             return $articles->get()->toArray();
       }
+
+      public static function sanitizeMarkdown(string $md): string {
+            return strip_tags($md, '<' . implode('><', [
+                  'p', 'br', 'strong', 'em', 'b', 'i', 'u',
+                  'code', 'pre', 'blockquote',
+                  'ul', 'ol', 'li',
+                  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                  'img', 'a', 'table', 'thead', 'tbody', 'tr', 'td', 'th'
+            ]) . '>');
+      }
 }

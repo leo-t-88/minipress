@@ -24,8 +24,8 @@ class PostCreateArticleAction extends AbstractAction
         $csrf = $data['csrf_token'] ?? '';
 
         $titre = filter_var($data['titre'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
-        $resume = $data['resume'];
-        $contenu = $data['contenu'];
+        $resume = ArticleManaService::sanitizeMarkdown($data['resume'] ?? '');
+        $contenu = ArticleManaService::sanitizeMarkdown($data['contenu'] ?? '');
         $categorie_id = filter_var($data['categorie_id'] ?? null, FILTER_VALIDATE_INT);
         if ($categorie_id === false) $categorie_id = null;
         

@@ -4,7 +4,7 @@ import '../models/category.dart';
 
 class ApiService {
   final Dio _dio = Dio();
-  final String baseUrl = "http://docketu.iutnc.univ-lorraine.fr:16797";
+  final String baseUrl = "http://localhost:80"; // http://ip:80 ou http(s)://dns:80
 
   Future<List<Article>> fetchArticles() async {
     final response = await _dio.get("$baseUrl/api/articles");

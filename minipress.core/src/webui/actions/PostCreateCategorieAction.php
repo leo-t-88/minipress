@@ -23,7 +23,7 @@ class PostCreateCategorieAction {
     {
         $data = $request->getParsedBody();
 
-        $label = trim($data['label'] ?? '');
+        $label = filter_var($data['label'] ?? '', FILTER_SANITIZE_SPECIAL_CHARS);
         $csrf = $data['csrf_token'] ?? '';
 
         $authzService = new AuthzService();
@@ -37,12 +37,7 @@ class PostCreateCategorieAction {
             $service = new CategorieService();
             $service->createCategorie($label);
 
-            return $response
-                ->withHeader(
-                    'Location',
-                    RouteContext::fromRequest($request)->getRouteParser()->urlFor('home')
-                )
-                ->withStatus(302);
+            return $response->withHeader('Location', RouteContext::fromRequest($request)->getRouteParser()->urlFor('home'))->withStatus(302);
 
         } catch (CsrfException | DataErrorException $e) {
             throw new HttpBadRequestException($request, $e->getMessage());
