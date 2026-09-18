@@ -12,12 +12,12 @@ S4DWM1
 - URL Docketu (User) : http://docketu.iutnc.univ-lorraine.fr:16798/
 
 ### Installation
-- Copiez coller le fichier ``.env.dist`` en ``.env`` et remplir le fichier
-- Fait de même pour ``minipress.core/src/conf/minipress.conf.ini.dist`` en ``minipress.core/src/conf/minipress.db.conf.ini``
+- Copier-coller le fichier ``.env.dist`` en ``.env`` et remplir le fichier
+- Faire de même pour ``minipress.core/src/conf/minipress.conf.ini.dist`` en ``minipress.core/src/conf/minipress.db.conf.ini``
 - Executer les requètes SQL des fichiers ``sql/minipress.sql`` puis ``sql/minipress_data.sql`` dans adminer (http://localhost:8080 par defaut)
-- Une fois les fichiers complété avec la bonne configuration
+- Une fois les fichiers complétés avec la bonne configuration
 - Lancer docker (s'il n'est pas déjà lancé) puis ouvrez un terminal dans le repertoire racine du projet giftbox et excecutez la commande suivante : ``docker compose up``
-- Accedez à l'appli via http://localhost:80 et http://localhost:81
+- Acceder à l'appli via http://localhost:80 et http://localhost:81
 
 ### Fonctionnalité réalisées
 - Muhammet :
@@ -79,8 +79,8 @@ S4DWM1
 | Permission | **Auteur (>= 1 && < 50)** | **Admin (>= 50 && < 100)** | **SuperAdmin (100)** |
 |-----------|-------------------------------|----------------------------------|-------------------------------------------|
 | **Comptes pour tester** | Mail `loic@gmail.com`, mdp `Loic1234` | Mail `hi@gmail.com`, mdp `Malik1234`<br>Mail `johan@gmail.com`, mdp `Johan1234` | Mail `leo.thomas@minipress.com`, mdp `Utilisateur1` |
-| **Créer un article** | ✔️ | ✔️ | ✔️ |
-| **Créer une catégorie** | ✔️ | ✔️ | ✔️ |
-| **Voir les articles** | ✔️ | ✔️ | ✔️ |
+| **Créer un article** | Oui | Oui | Oui |
+| **Créer une catégorie** | Oui | Oui | Oui |
+| **Voir les articles** | Oui | Oui | Oui |
 | **Publier/dépublier des articles** | Uniquement les siens | Tous | Tous |
-| **Créer des comptes utilisateurs** | ❌ | ❌ | ✔️ |
+| **Créer des comptes utilisateurs** | Non | Non | Oui |

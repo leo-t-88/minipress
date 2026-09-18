@@ -16,8 +16,8 @@ class ArticleManaService implements ArticleManaInterface
             try {
                   $article = new Article();
                   $article->titre = $titre;
-                  $article->resume = $resume;
-                  $article->contenu = $contenu;
+                  $article->resume = self::sanitizeMarkdown($resume);
+                  $article->contenu = self::sanitizeMarkdown($contenu);
                   $article->auteur_id = $createur_id;
                   $article->categorie_id = $categorie_id;
 
@@ -94,12 +94,9 @@ class ArticleManaService implements ArticleManaInterface
       }
 
       public static function sanitizeMarkdown(string $md): string {
-            return strip_tags($md, '<' . implode('><', [
-                  'p', 'br', 'strong', 'em', 'b', 'i', 'u',
-                  'code', 'pre', 'blockquote',
-                  'ul', 'ol', 'li',
-                  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-                  'img', 'a', 'table', 'thead', 'tbody', 'tr', 'td', 'th'
-            ]) . '>');
+            $md = str_replace(["\r\n", "\r"], "\n", $md);
+            $md = strip_tags($md);
+
+            return trim($md);
       }
 }
